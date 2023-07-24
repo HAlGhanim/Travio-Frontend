@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: "gray",
-    borderRadius: "100%",
+    // borderRadius: "100%",
     margin: 17,
     overflow: "hidden",
   },
