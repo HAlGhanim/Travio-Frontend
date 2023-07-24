@@ -12,7 +12,7 @@ function BottomBar2() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: "#00008B",
+        activeTintColor: "#002147",
         inactiveTintColor: "black",
       }}
     >
