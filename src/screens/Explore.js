@@ -6,9 +6,7 @@ const Explore = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Explore the world with us!</Text>
-      {/* <ScrollView> */}
       <TripList />
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };

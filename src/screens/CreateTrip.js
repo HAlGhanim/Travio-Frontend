@@ -5,8 +5,9 @@ import ImagePickerC from "../components/Shared/ImagePickerC";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/trips/Create";
+import ROUTES from "../navigation";
 
-const CreateTrip = () => {
+const CreateTrip = ({ navigation }) => {
   // const queryClient = useQueryClient();
   const [data, setData] = useState("");
 
@@ -15,8 +16,8 @@ const CreateTrip = () => {
     onSuccess: () => {
       // Invalidate and refetch
       // queryClient.invalidateQueries({ queryKey: ["trip"] });
+      navigation.navigate(ROUTES.HEDERROUTES.EXPLOR);
       alert("Trip created successfully!");
-      //   navigate("");
     },
     onError: (error) => {
       alert("An error occurred: " + error.message);
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     overflow: "hidden",
   },
+
   image: {
     width: "100%",
     height: 200,
