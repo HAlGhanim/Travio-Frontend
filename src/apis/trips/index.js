@@ -2,7 +2,7 @@ import instance from "..";
 
 const getAllTrips = async () => {
   const res = await instance.get("/trips/");
-  return res.data;
+  return res.data.reverse();
 };
 
 const createTrip = async (data) => {

@@ -1,10 +1,14 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { BASE_URL } from "../../apis";
 
 const TripCard = ({ trip }) => {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: trip.tripImage }} style={styles.image} />
+      <Image
+        source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+        style={styles.image}
+      />
       <Text style={styles.title}>{trip.title}</Text>
       <Text style={styles.description}>{trip.description}</Text>
     </View>
@@ -41,4 +45,3 @@ const styles = StyleSheet.create({
 });
 
 export default TripCard;
-//{ uri: trip.imageUri }

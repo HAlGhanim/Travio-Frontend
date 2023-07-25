@@ -10,6 +10,7 @@ const Create = ({ data, setData }) => {
         value={data.title}
         onChangeText={(value) => setData({ ...data, title: value })}
       />
+
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Description"
