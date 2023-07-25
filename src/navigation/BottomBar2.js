@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 function BottomBar2() {
   return (
     <Tab.Navigator
-      tabBarOptions={{
+      screenOptions={{
         activeTintColor: "#002147",
         inactiveTintColor: "black",
       }}

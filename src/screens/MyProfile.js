@@ -3,9 +3,9 @@ import React from "react";
 
 const MyProfile = () => {
   return (
-    <SafeAreaView>
+    <View>
       <Text>MyProfile</Text>
-    </SafeAreaView>
+    </View>
   );
 };
 
