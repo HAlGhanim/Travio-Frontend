@@ -1,14 +1,19 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ROUTES from ".";
+import ROUTES from "./index";
 import CreateTrip from "../screens/CreateTrip";
 import Explore from "../screens/Explore";
 import MyProfile from "../screens/MyProfile";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import React, { useContext } from "react";
+import UserContext from "../context/UserContext";
+import AuthNavigator from "./AuthNavigator";
 
 const Tab = createBottomTabNavigator();
 
 function BottomBar2() {
+  const { user } = useContext(UserContext);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -17,7 +22,7 @@ function BottomBar2() {
       }}
     >
       <Tab.Screen
-        name={ROUTES.HEDERROUTES.EXPLOR}
+        name={ROUTES.HEDERROUTES.EXPLORE}
         component={Explore}
         options={{
           tabBarLabel: "Explore",
@@ -30,18 +35,20 @@ function BottomBar2() {
           ),
         }}
       />
+
       <Tab.Screen
         name={ROUTES.HEDERROUTES.CREATE}
-        component={CreateTrip}
+        component={user ? CreateTrip : AuthNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Octicons name="diff-added" size={size} color={color} />
           ),
         }}
       />
+
       <Tab.Screen
         name={ROUTES.HEDERROUTES.PROFILE}
-        component={MyProfile}
+        component={user ? MyProfile : AuthNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons

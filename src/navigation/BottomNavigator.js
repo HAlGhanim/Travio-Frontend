@@ -11,13 +11,13 @@ const Tab = createMaterialBottomTabNavigator();
 function BottomNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName={ROUTES.HEDERROUTES.EXPLOR}
+      initialRouteName={ROUTES.HEDERROUTES.EXPLORE}
       activeColor="black"
       inactiveColor="#9fa5aa"
       barStyle={{ backgroundColor: "transparent" }}
     >
       <Tab.Screen
-        name={ROUTES.HEDERROUTES.EXPLOR}
+        name={ROUTES.HEDERROUTES.EXPLORE}
         component={Explore}
         options={{
           tabBarLabel: "Explore",

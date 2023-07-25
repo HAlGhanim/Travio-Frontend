@@ -1,6 +1,6 @@
 const ROUTES = {
   HEDERROUTES: {
-    EXPLOR: "explore",
+    EXPLORE: "explore",
     CREATE: "create",
     PROFILE: "Account",
   },
