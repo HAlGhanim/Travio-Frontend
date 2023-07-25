@@ -1,22 +1,24 @@
 import { Button, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ImagePickerC from "../components/Shared/ImagePickerC";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
+import UserContext from "../context/UserContext";
 
 const CreateTrip = ({ navigation }) => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+  const { setUser } = useContext(UserContext);
   const [data, setData] = useState("");
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: (data) => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey: ["trip"] });
-      navigation.navigate(ROUTES.HEDERROUTES.EXPLOR);
+      queryClient.invalidateQueries({ queryKey: ["trip"] });
+      navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
       alert("Trip created successfully!");
     },
     onError: (error) => {
