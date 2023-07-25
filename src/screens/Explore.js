@@ -1,18 +1,18 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import TripList from "../components/Trips/TripList";
 
 const Explore = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Explore the world with us!</Text>
-      <TripList />
+      <TripList navigation={navigation} />
     </SafeAreaView>
   );
 };
-
-export default Explore;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,10 +22,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-
     textAlign: "center",
     marginBottom: 20,
     marginTop: 10,
     color: "darkblue",
   },
 });
+
+export default Explore;
