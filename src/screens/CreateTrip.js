@@ -1,45 +1,47 @@
-import {
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import ImagePickerC from "../components/Shared/ImagePickerC";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTrip } from "../apis/trips/index";
+import Create from "../components/trips/Create";
+
 const CreateTrip = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  // const queryClient = useQueryClient();
+  const [data, setData] = useState("");
 
-  const handleSubmit = () => {};
+  const { mutate: createTripFun } = useMutation({
+    mutationFn: (data) => createTrip(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      // queryClient.invalidateQueries({ queryKey: ["trip"] });
+      alert("Trip created successfully!");
+      //   navigate("");
+    },
+    onError: (error) => {
+      alert("An error occurred: " + error.message);
+    },
+  });
 
-  //   navigation.setOptions({ title: "Create Trip" });
+  const handleSubmit = () => {
+    createTripFun(data);
+  };
+  //console.log(data);
 
   return (
     <>
       <View style={styles.container}>
-        <ImagePickerC />
+        <ImagePickerC
+          style={styles.image}
+          onImagePicked={(imageUri) =>
+            setData({ ...data, tripImage: imageUri })
+          }
+        />
 
-        <TextInput
-          style={styles.input}
-          onChangeText={setTitle}
-          value={title}
-          placeholder="Title"
-          placeholderTextColor="gray"
-        />
-        <TextInput
-          style={[styles.input, styles.textArea]}
-          onChangeText={setDescription}
-          value={description}
-          placeholder="Description"
-          placeholderTextColor="gray"
-          multiline
-          numberOfLines={4}
-        />
+        <Create data={data} setData={setData} />
+
         <View style={styles.buttonContainer}>
-          <Button title="Create Trip" onPress={handleSubmit} color="#841584" />
+          <Button title="Create Trip" onPress={handleSubmit} color="darkblue" />
         </View>
       </View>
     </>
@@ -55,18 +57,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
-  input: {
-    height: 40,
-
-    borderBottomWidth: 1,
-    marginBottom: 15,
-    padding: 10,
-    fontSize: 18,
-  },
-  textArea: {
-    height: 100,
-  },
   buttonContainer: {
     marginTop: 20,
+    borderRadius: 7,
+    overflow: "hidden",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 7,
+    marginBottom: 20,
+    borderColor: "#D3D3D3",
+    borderWidth: 1,
   },
 });
