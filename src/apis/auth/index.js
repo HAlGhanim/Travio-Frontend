@@ -11,13 +11,15 @@ const signUp = async (userInfo) => {
   for (const key in userInfo) {
     if (key != "image") {
       formData.append(key, userInfo[key]);
+    } else {
+      formData.append("image", {
+        name: userInfo.image,
+        type: "image/jpeg",
+        uri: userInfo.image,
+      });
     }
   }
-  formData.append("image", {
-    name: userInfo.image,
-    type: "image/jpeg",
-    uri: userInfo.image,
-  });
+  console.log(formData);
   const res = await instance.post("/users/signup", formData);
   return res.data;
 };

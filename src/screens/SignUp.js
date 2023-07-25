@@ -6,7 +6,7 @@ import {
   View,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth";
@@ -15,16 +15,19 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
+import UserContext from "../context/UserContext";
 
 const SignUp = () => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+  const { setUser } = useContext(UserContext);
   const navigation = useNavigation();
 
   const { mutate: signupFunction, error } = useMutation({
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
+      setUser(true);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
   });
