@@ -4,7 +4,7 @@ import ImagePickerC from "../components/Shared/ImagePickerC";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
-import Create from "../components/trips/Create";
+import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
 
 const CreateTrip = ({ navigation }) => {

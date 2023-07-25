@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import TripList from "../components/trips/TripList";
+import TripList from "../components/Trips/TripList";
 
 const Explore = () => {
   return (
