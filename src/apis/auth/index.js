@@ -1,7 +1,7 @@
 import instance from "..";
 
 const signIn = async (userInfo) => {
-  const res = await instance.post("/auth/signin", userInfo);
+  const res = await instance.post("/users/signin", userInfo);
   return res.data;
 };
 
@@ -18,7 +18,7 @@ const signUp = async (userInfo) => {
     type: "image/jpeg",
     uri: userInfo.image,
   });
-  const res = await instance.post("/auth/signup", formData);
+  const res = await instance.post("/users/signup", formData);
   return res.data;
 };
 

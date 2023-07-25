@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { signin } from "../apis/auth";
+import { signIn } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -25,7 +25,7 @@ const SignIn = () => {
     isLoading,
     error,
   } = useMutation({
-    mutationFn: () => signin(userInfo),
+    mutationFn: () => signIn(userInfo),
     onSuccess: (data) => {
       saveToken(data.token);
       setUser(true);
@@ -78,7 +78,7 @@ const SignIn = () => {
             <TouchableOpacity
               style={styles.button}
               onPress={handleSubmit}
-              disabled={isLoading} 
+              disabled={isLoading}
             >
               <Text style={styles.buttonText}>Signin</Text>
             </TouchableOpacity>
