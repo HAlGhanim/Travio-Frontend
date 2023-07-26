@@ -16,6 +16,7 @@ instance.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
+
 });
 
 export { BASE_URL };
