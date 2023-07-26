@@ -10,7 +10,7 @@ import UserContext from "../context/UserContext";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
-  const { setUser } = useContext(UserContext);
+
   const [data, setData] = useState("");
 
   const { mutate: createTripFun } = useMutation({
