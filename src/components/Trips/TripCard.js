@@ -5,13 +5,14 @@ import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../../navigation";
 
 const TripCard = ({ trip }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+
   return (
-    <Pressable onPress={() => {
-      navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, { _id: trip._id })
-
-    }}>
-
+    <Pressable
+      onPress={() => {
+        navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, { _id: trip._id });
+      }}
+    >
       <View style={styles.cardContainer}>
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
