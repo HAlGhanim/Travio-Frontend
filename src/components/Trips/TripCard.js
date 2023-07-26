@@ -1,21 +1,31 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import { BASE_URL } from "../../apis";
+import { Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import ROUTES from "../../navigation";
 
 const TripCard = ({ trip }) => {
+  const navigation = useNavigation()
   return (
-    <View style={styles.cardContainer}>
-      <Text style={styles.name}>
-        {trip.createdBy ? trip.createdBy.username : "Default User"}
-      </Text>
-      <View style={styles.card}>
-        <Image
-          source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
-          style={styles.image}
-        />
-        <Text style={styles.title}>{trip.title}</Text>
-        {/* <Text style={styles.description}>{trip.description}</Text> */}
+    <Pressable onPress={() => {
+      navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, { _id: trip._id })
+
+    }}>
+
+      <View style={styles.cardContainer}>
+        <Text style={styles.name}>
+          {trip.createdBy ? trip.createdBy.username : "Default User"}
+        </Text>
+        <View style={styles.card}>
+          <Image
+            source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+            style={styles.image}
+          />
+          <Text style={styles.title}>{trip.title}</Text>
+          {/* <Text style={styles.description}>{trip.description}</Text> */}
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

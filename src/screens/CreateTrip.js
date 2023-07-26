@@ -11,23 +11,20 @@ import UserContext from "../context/UserContext";
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
 
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
 
   const { mutate: createTripFun } = useMutation({
-    mutationFn: (data) => createTrip(data),
+    mutationFn: () => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["trip"] });
+      queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
       alert("Trip created successfully!");
-    },
-    onError: (error) => {
-      alert("An error occurred: " + error.message);
     },
   });
 
   const handleSubmit = () => {
-    createTripFun(data);
+    createTripFun();
   };
   //console.log(data);
 

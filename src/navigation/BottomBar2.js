@@ -8,6 +8,7 @@ import { Octicons } from "@expo/vector-icons";
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import AuthNavigator from "./AuthNavigator";
+import ExploreNavigation from "./ExploreNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,9 +23,10 @@ function BottomBar2() {
       }}
     >
       <Tab.Screen
-        name={ROUTES.HEDERROUTES.EXPLORE}
-        component={Explore}
+        name={ROUTES.HEDERROUTES.EXPLORE_NAVIGATION}
+        component={ExploreNavigation}
         options={{
+          headerShown: false,
           tabBarLabel: "Explore",
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons
