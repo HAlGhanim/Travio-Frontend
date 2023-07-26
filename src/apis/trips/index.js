@@ -8,7 +8,7 @@ const getAllTrips = async () => {
 };
 const getTripById = async (id) => {
   const res = await instance.get(`/trips/${id}`);
-  return res.data
+  return res.data;
 };
 
 const createTrip = async (data) => {
@@ -25,14 +25,11 @@ const createTrip = async (data) => {
     if (key != "tripImage") {
       formData.append(key, data[key]);
     } else {
-      // console.log("Image URI: ", data.tripImage);
-
       formData.append("tripImage", {
         name: data.tripImage,
         type: "image/jpeg",
         uri: data.tripImage,
       });
-      console.log("formData: ", formData);
     }
   }
   const res = await instance.post("/trips/", formData);

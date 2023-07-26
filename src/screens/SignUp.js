@@ -40,9 +40,7 @@ const SignUp = () => {
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
     }
   };
