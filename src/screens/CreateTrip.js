@@ -1,25 +1,16 @@
 import { Button, StyleSheet, View } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import ImagePickerC from "../components/Shared/ImagePickerC";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
-import UserContext from "../context/UserContext";
-import { useFocusEffect } from "@react-navigation/native";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const [data, setData] = useState({});
-
-  // to clear form after
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     return () => setData("");
-  //   }, [])
-  // );
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () => createTrip(data),
@@ -34,7 +25,6 @@ const CreateTrip = ({ navigation }) => {
   const handleSubmit = () => {
     createTripFun();
   };
-  //console.log(data);
 
   return (
     <>
@@ -80,3 +70,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+
+// to clear form after
+// useFocusEffect(
+//   React.useCallback(() => {
+//     return () => setData("");
+//   }, [])
+// );

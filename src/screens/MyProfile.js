@@ -3,8 +3,9 @@ import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
 
-const MyProfile = () => {
+const MyProfile = ({ user }) => {
   const { setUser } = useContext(UserContext);
+
   const handleLogout = () => {
     setUser(false);
     removeToken();
@@ -13,6 +14,7 @@ const MyProfile = () => {
     <>
       <View style={{ backgroundColor: "gray", flex: 1 }}>
         <Text>Profile</Text>
+        {/* <Text style={styles.name}>{user.username}</Text> */}
         <Button
           title="Logout"
           onPress={() => {
