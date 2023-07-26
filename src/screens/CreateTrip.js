@@ -11,7 +11,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
-  const [data, setData] = useState("");
+
+  const [data, setData] = useState({});
 
   // to clear form after
   // useFocusEffect(
@@ -21,24 +22,17 @@ const CreateTrip = ({ navigation }) => {
   // );
 
   const { mutate: createTripFun } = useMutation({
-    mutationFn: (data) => createTrip(data),
+    mutationFn: () => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["trips"] });
-
-      //update the cache with the new trip
-      // queryClient.setQueryData(["trips"], (old) => [...old, newTrip]);
-
+      queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
       alert("Trip created successfully!");
-    },
-    onError: (error) => {
-      alert("An error occurred: " + error.message);
     },
   });
 
   const handleSubmit = () => {
-    createTripFun(data);
+    createTripFun();
   };
   //console.log(data);
 
