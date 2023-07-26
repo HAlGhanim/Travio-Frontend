@@ -7,17 +7,28 @@ import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
-
   const [data, setData] = useState("");
+
+  // to clear form after
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => setData("");
+  //   }, [])
+  // );
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: (data) => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["trip"] });
+      queryClient.invalidateQueries({ queryKey: ["trips"] });
+
+      //update the cache with the new trip
+      // queryClient.setQueryData(["trips"], (old) => [...old, newTrip]);
+
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
       alert("Trip created successfully!");
     },
