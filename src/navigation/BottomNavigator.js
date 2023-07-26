@@ -5,6 +5,7 @@ import Explore from "../screens/Explore";
 import MyProfile from "../screens/MyProfile";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import ExploreNavigation from "./ExploreNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,7 +19,7 @@ function BottomNavigator() {
     >
       <Tab.Screen
         name={ROUTES.HEDERROUTES.EXPLORE}
-        component={Explore}
+        component={ExploreNavigation}
         options={{
           tabBarLabel: "Explore",
           tabBarIcon: ({ color }) => (

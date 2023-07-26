@@ -6,6 +6,10 @@ const getAllTrips = async () => {
   const res = await instance.get("/trips/");
   return res.data.reverse();
 };
+const getTripById = async (id) => {
+  const res = await instance.get(`/trips/${id}`);
+  return res.data
+};
 
 const createTrip = async (data) => {
   const token = await SecureStore.getItemAsync("token");
@@ -59,4 +63,4 @@ const deleteTrip = async (id) => {
   return res.data;
 };
 
-export { createTrip, getAllTrips, updateTrip, deleteTrip };
+export { createTrip, getAllTrips, updateTrip, deleteTrip, getTripById };
