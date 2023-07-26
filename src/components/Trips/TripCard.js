@@ -1,24 +1,32 @@
-import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { BASE_URL } from "../../apis";
 
 const TripCard = ({ trip }) => {
   return (
-    <View style={styles.card}>
-      <Image
-        source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
-        style={styles.image}
-      />
-      <Text style={styles.title}>{trip.title}</Text>
-      <Text style={styles.description}>{trip.description}</Text>
+    <View style={styles.cardContainer}>
+      <Text style={styles.name}>
+        {trip.createdBy ? trip.createdBy.username : "Default User"}
+      </Text>
+      <View style={styles.card}>
+        <Image
+          source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+          style={styles.image}
+        />
+        <Text style={styles.title}>{trip.title}</Text>
+        {/* <Text style={styles.description}>{trip.description}</Text> */}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 26,
+  },
   card: {
     backgroundColor: "#fff",
-    margin: 20,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -27,20 +35,27 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: "88%",
+    width: "100%",
     height: 225,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    padding: 10,
   },
   description: {
     fontSize: 16,
     color: "gray",
     marginBottom: 10,
+    padding: 10,
   },
 });
 
