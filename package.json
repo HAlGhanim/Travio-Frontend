@@ -21,10 +21,10 @@
     "expo-secure-store": "~12.1.1",
     "expo-status-bar": "~1.4.4",
     "formik": "^2.4.2",
+    "jwt-decode": "^3.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-paper": "^5.9.1",
     "react-native-vector-icons": "^10.0.0",
     "react-native-web": "~0.18.10",
     "yup": "^1.2.0"

@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native-paper'
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import React from "react";
 
 const Update = ({ data, setData }) => {
     return (
@@ -21,18 +20,10 @@ const Update = ({ data, setData }) => {
                 onChangeText={(value) => setData({ ...data, description: value })}
                 multiline
             />
-
-
-
-
-
-
         </View>
-    )
-}
+    );
+};
 
-export default Update
+export default Update;
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({});

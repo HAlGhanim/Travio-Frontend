@@ -19,7 +19,7 @@ const signUp = async (userInfo) => {
       });
     }
   }
-  console.log(formData);
+
   const res = await instance.post("/users/signup", formData);
   return res.data;
 };

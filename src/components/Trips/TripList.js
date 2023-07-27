@@ -1,38 +1,38 @@
 import React from "react";
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text, StyleSheet, Button } from "react-native";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TripCard from "./TripCard";
 import { getAllTrips } from "../../apis/trips/index";
 
 const TripList = () => {
-  const queryClient = useQueryClient()
-  const { data: trips, isLoading } = useQuery({
-    queryKey: ['trips'],
+  const clientQuery = useQueryClient();
+  const {
+    data: trips,
+    isFetching,
+    refetch,
+  } = useQuery({
+    queryKey: ["trips"],
     queryFn: () => getAllTrips(),
   });
 
-
-
-
-  const queryCache = queryClient.getQueryCache();
-
-  const liveQueriesOnScreen = queryCache.findAll({ active: true });
-
-  const queryKeys = liveQueriesOnScreen.map((query) => {
-    return query.queryKey;
+  console.log("Trips list");
+  clientQuery.invalidateQueries({
+    predicate: (query) => {
+      console.log("[KEYS - from trip list]:", query.queryKey[0]);
+    },
   });
 
-  console.log({ queryKeys })
+  if (isFetching) return <Text>Loading...</Text>;
 
-
-  if (isLoading) return <Text>Loading...</Text>;
-  console.log(trips)
   return (
-    <FlatList
-      data={trips}
-      keyExtractor={(item) => item._id}
-      renderItem={({ item }) => <TripCard trip={item} />}
-    />
+    <>
+      <Button title="REFROMTRIPS" onPress={() => refetch()} />
+      <FlatList
+        data={trips}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => <TripCard trip={item} />}
+      />
+    </>
   );
 };
 

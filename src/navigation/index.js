@@ -4,7 +4,8 @@ const ROUTES = {
     EXPLORE: "explore",
     CREATE: "create",
     PROFILE: "Account",
-    UPDATETRIP: "tripEdit"
+    TRIPDETAILS: "trip detail",
+    UPDATETRIP: "tripEdit",
   },
   AUTHROUTES: {
     SIGNIN: "signIn",

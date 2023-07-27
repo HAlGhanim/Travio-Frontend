@@ -1,17 +1,19 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { BASE_URL } from "../../apis";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../../navigation";
 
 const TripCard = ({ trip }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+
   return (
-    <Pressable onPress={() => {
-      navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, { _id: trip._id })
-
-    }}>
-
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate(ROUTES.HEDERROUTES.TRIPDETAILS, { _id: trip._id });
+        //navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, { _id: trip._id });
+      }}
+    >
       <View style={styles.cardContainer}>
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
@@ -25,7 +27,7 @@ const TripCard = ({ trip }) => {
           {/* <Text style={styles.description}>{trip.description}</Text> */}
         </View>
       </View>
-    </Pressable >
+    </TouchableOpacity>
   );
 };
 

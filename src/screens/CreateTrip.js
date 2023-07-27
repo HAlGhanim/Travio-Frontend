@@ -1,5 +1,5 @@
-import { Button, StyleSheet, View } from "react-native";
-import React, { useContext, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import ImagePickerC from "../components/Shared/ImagePickerC";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,15 +11,13 @@ import UserContext from "../context/UserContext";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
-
+  console.log("Create trip");
+  queryClient.invalidateQueries({
+    predicate: (query) => {
+      console.log("[KEYS - create trip]: ", query.queryKey[0]);
+    },
+  });
   const [data, setData] = useState({});
-
-  // to clear form after
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     return () => setData("");
-  //   }, [])
-  // );
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () => createTrip(data),
@@ -27,15 +25,12 @@ const CreateTrip = ({ navigation }) => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
-      alert("Trip created successfully!");
     },
   });
 
   const handleSubmit = () => {
     createTripFun();
   };
-  console.log(data);
-
 
   return (
     <>
@@ -45,12 +40,18 @@ const CreateTrip = ({ navigation }) => {
           onImagePicked={(imageUri) =>
             setData({ ...data, tripImage: imageUri })
           }
-        />
+        >
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text style={{ color: "grey" }}>Tap to select a trip image</Text>
+          </View>
+        </ImagePickerC>
 
         <Create data={data} setData={setData} />
 
         <View style={styles.buttonContainer}>
-          <Button title="Create Trip" onPress={handleSubmit} color="darkblue" />
+          <Button title="Create Trip" onPress={handleSubmit} color="black" />
         </View>
       </View>
     </>

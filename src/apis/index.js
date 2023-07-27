@@ -3,7 +3,8 @@ import * as SecureStore from "expo-secure-store";
 import { getToken } from "./auth/storage";
 
 // const BASE_URL = "http://192.168.0.181:8000";
-// const BASE_URL = "//192.168.1.79:19000";
+// const BASE_URL = "http://192.168.8.53:8000";
+// const BASE_URL = "http://localhost:8000";
 const BASE_URL = "http://localhost:8000";
 
 const instance = axios.create({
@@ -11,12 +12,11 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (config) => {
-  const token = await getToken()
+  const token = await getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-
 });
 
 export { BASE_URL };

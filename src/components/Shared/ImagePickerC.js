@@ -1,10 +1,10 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { BASE_URL } from "../../apis";
 
-const ImagePickerC = ({ onImagePicked, style, imageData = null }) => {
+const ImagePickerC = ({ onImagePicked, style, imageData = null, children }) => {
   const [image, setImage] = useState(null);
   const getPremisstion = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -26,8 +26,6 @@ const ImagePickerC = ({ onImagePicked, style, imageData = null }) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
       onImagePicked(result.assets[0].uri);
@@ -37,26 +35,21 @@ const ImagePickerC = ({ onImagePicked, style, imageData = null }) => {
   return (
     <Pressable onPress={pickImage}>
       <View style={style}>
-        {(image || imageData) && (
-          <Image
-            source={{ uri: image || `${BASE_URL}/${imageData}` }}
-            style={{ width: "100%", height: "100%" }}
-          />
-        )}
-      </View>
-    </Pressable>
+        {
+          (image || imageData) ? (
+            <Image
+              source={{ uri: image || `${BASE_URL}/${imageData}` }}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            children
+          )
+        }
+      </View >
+    </Pressable >
   );
 };
 
 export default ImagePickerC;
 
-const styles = StyleSheet.create({
-  // image: {
-  //   width: 100,
-  //   height: 100,
-  //   backgroundColor: "gray",
-  //   // borderRadius: "100%",
-  //   margin: 17,
-  //   overflow: "hidden",
-  // },
-});
+const styles = StyleSheet.create({});

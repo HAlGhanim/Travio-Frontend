@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
-import * as Yup from "yup";
+import * as Yup from "yup"; 
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
@@ -27,7 +27,8 @@ const SignUp = () => {
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(true);
+      const userObj = jwt_decode(data.token);
+      setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
   });
@@ -40,8 +41,6 @@ const SignUp = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.uri);
     }
@@ -49,7 +48,19 @@ const SignUp = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(/.{8,}$/, "Password must be at least 8 characters long.")
+      ?.matches(/\d/, "Password must contain a number.")
+      ?.matches(/[A-Z]/, "Password must contain an uppercase letter.")
+      ?.matches(/[a-z]/, "Password must contain a lowercase letter.")
+      ?.matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain a symbol."),
+    passwordConfirmation: Yup.string()
+      .required("Confirmation password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
   return (
@@ -61,7 +72,12 @@ const SignUp = () => {
       }}
     >
       <Formik
-        initialValues={{ username: "", password: "" }}
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          passwordConfirmation: "",
+        }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           setUserInfo(values);
@@ -115,6 +131,16 @@ const SignUp = () => {
             />
             {touched.password && errors.password && (
               <Text style={styles.error}>{errors.password}</Text>
+            )}
+
+            <TextInput
+              placeholder="Password Confirmation"
+              onChangeText={handleChange("passwordConfirmation")}
+              value={values.passwordConfirmation}
+              secureTextEntry
+            />
+            {touched.passwordConfirmation && errors.passwordConfirmation && (
+              <Text style={styles.error}>{errors.passwordConfirmation}</Text>
             )}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>

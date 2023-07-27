@@ -1,13 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import UserContext from "./src/context/UserContext";
 import BottomBar2 from "./src/navigation/BottomBar2";
-import BottomNavigator from "./src/navigation/BottomNavigator";
 import { getToken } from "./src/apis/auth/storage";
-
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default function App() {
   const [user, setUser] = useState(false);
 
@@ -23,7 +22,7 @@ export default function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={new QueryClient({})}>
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer>
           <BottomBar2 />

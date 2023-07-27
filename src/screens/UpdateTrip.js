@@ -41,7 +41,6 @@ const UpdateTrip = ({ navigation, route }) => {
         mutationFn: (data) => updateTrip(_id, data),
         onSuccess: () => {
             // Invalidate and refetch
-
             queryClient.invalidateQueries(["trips"]);
             navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
         },
@@ -55,21 +54,7 @@ const UpdateTrip = ({ navigation, route }) => {
     };
 
     return (
-        // <>
-        //   <View style={styles.container}>
-        //     <ImagePickerC
-        //       style={styles.image}
-        //       onImagePicked={(imageUri) =>
-        //         setData({ ...data, tripImage: imageUri })
-        //       }
-        //     />
 
-        // const handleSubmit = () => {
-        //     updateTripFun(data);
-        // };
-        // console.log(data);
-
-        // return (
         <>
             <View style={styles.container}>
                 <ImagePickerC
