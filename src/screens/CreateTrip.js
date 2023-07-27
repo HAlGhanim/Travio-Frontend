@@ -8,7 +8,6 @@ import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
 
-
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
   console.log("Create trip");
@@ -18,12 +17,14 @@ const CreateTrip = ({ navigation }) => {
     },
   });
   const [data, setData] = useState({});
+  const [image, setImage] = useState(null);
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
       setData({});
+      setImage(null);
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
@@ -37,6 +38,8 @@ const CreateTrip = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <ImagePickerC
+          image={image}
+          setImage={setImage}
           style={styles.image}
           onImagePicked={(imageUri) =>
             setData({ ...data, tripImage: imageUri })
