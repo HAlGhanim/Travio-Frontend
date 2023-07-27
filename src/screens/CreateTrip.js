@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
+import UserContext from "../context/UserContext";
+
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();

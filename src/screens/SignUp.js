@@ -12,11 +12,11 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
-import * as Yup from "yup"; 
+import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
-
+import jwt_decode from 'jwt-decode'
 const SignUp = () => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});

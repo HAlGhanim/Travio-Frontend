@@ -8,13 +8,14 @@ import {
 } from "react-native";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteTrip, getTripById } from "../apis/trips/index";
+import { deleteTrip, getTripById } from "../apis/trips/index"; // import your API function
 import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
 import UserContext from "../context/UserContext";
 
 const TripDetails = ({ navigation, route }) => {
+  const [showBox, setShowBox] = useState(true);
   const { user } = useContext(UserContext);
   const _id = route.params._id;
   const queryClient = useQueryClient();
@@ -24,6 +25,26 @@ const TripDetails = ({ navigation, route }) => {
     isError,
   } = useQuery(["trip", _id], () => getTripById(_id));
 
+  const showConfirmDialog = () => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to delete this trip?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteTripFun();
+            setShowBox(false);
+          },
+        },
+
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
+
   const { mutate: deleteTripFun } = useMutation({
     mutationFn: () => deleteTrip(_id),
     onSuccess: () => {
@@ -32,30 +53,9 @@ const TripDetails = ({ navigation, route }) => {
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
       alert("Trip deleted successfully!");
     },
-    onError: (error) => {
-      console.log("Error:", error);
-    },
   });
   const handleDelete = () => {
-    Alert.alert(
-      "Confirmation",
-      "Are you sure you want to delete this trip?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            console.log("OK Pressed");
-            deleteTripFun();
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    showConfirmDialog();
   };
 
   if (isLoading) return <Text>Loading...</Text>;
@@ -97,6 +97,7 @@ const TripDetails = ({ navigation, route }) => {
                   onPress={handleDelete}
                 >
                   <View style={styles.buttonContent}>
+                    {showBox}
                     <Ionicons name="trash-outline" size={18} color="black" />
                     <Text style={styles.buttonText}>Delete</Text>
                   </View>
@@ -184,5 +185,20 @@ const styles = StyleSheet.create({
   deleteButton: {
     marginRight: 4,
     marginLeft: 4,
+  },
+
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  box: {
+    width: 300,
+    height: 300,
+    backgroundColor: "white",
+    marginBottom: 30,
+  },
+  text: {
+    fontSize: 30,
   },
 });
