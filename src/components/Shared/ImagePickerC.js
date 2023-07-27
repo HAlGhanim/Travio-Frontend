@@ -4,8 +4,14 @@ import { Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { BASE_URL } from "../../apis";
 
-const ImagePickerC = ({ onImagePicked, style, imageData = null, children }) => {
-  const [image, setImage] = useState(null);
+const ImagePickerC = ({
+  onImagePicked,
+  style,
+  imageData = null,
+  children,
+  image,
+  setImage,
+}) => {
   const getPremisstion = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!granted) {
@@ -35,18 +41,16 @@ const ImagePickerC = ({ onImagePicked, style, imageData = null, children }) => {
   return (
     <Pressable onPress={pickImage}>
       <View style={style}>
-        {
-          (image || imageData) ? (
-            <Image
-              source={{ uri: image || `${BASE_URL}/${imageData}` }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          ) : (
-            children
-          )
-        }
-      </View >
-    </Pressable >
+        {image || imageData ? (
+          <Image
+            source={{ uri: image || `${BASE_URL}/${imageData}` }}
+            style={{ width: "100%", height: "100%" }}
+          />
+        ) : (
+          children
+        )}
+      </View>
+    </Pressable>
   );
 };
 

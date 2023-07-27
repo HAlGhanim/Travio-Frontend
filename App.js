@@ -5,6 +5,7 @@ import UserContext from "./src/context/UserContext";
 import BottomBar2 from "./src/navigation/BottomBar2";
 import { getToken } from "./src/apis/auth/storage";
 import { LogBox } from "react-native";
+import jwt_decode from "jwt-decode";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default function App() {
@@ -13,7 +14,8 @@ export default function App() {
   const checkToken = async () => {
     const token = await getToken();
     if (token) {
-      setUser(true);
+      const userObj = jwt_decode(token);
+      setUser(userObj);
     }
   };
 

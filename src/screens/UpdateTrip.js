@@ -7,95 +7,99 @@ import Update from "../components/Trips/Update";
 import ROUTES from "../navigation";
 
 const UpdateTrip = ({ navigation, route }) => {
-    const _id = route.params._id;
-    const [data, setData] = useState({});
+  const _id = route.params._id;
+  const [data, setData] = useState({});
+  const [image, setImage] = useState(null);
+  const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient();
+  const {} = useQuery({
+    queryKey: ["trip", _id],
+    queryFn: () => getTripById(_id),
+    onSuccess: (data) => {
+      setData({
+        title: data.title,
+        tripImage: data.tripImage,
+        description: data.description,
+      });
+    },
+    onError: (error) => {
+      console.log({ error });
+    },
+  });
 
-    const { } = useQuery({
-        queryKey: ["trip", _id],
-        queryFn: () => getTripById(_id),
-        onSuccess: (data) => {
-            setData({
-                title: data.title,
-                tripImage: data.tripImage,
-                description: data.description,
-            });
-        },
-        onError: (error) => {
-            console.log({ error });
-        },
-    });
+  const queryCache = queryClient.getQueryCache();
 
-    const queryCache = queryClient.getQueryCache();
+  const liveQueriesOnScreen = queryCache.findAll({ active: true });
 
-    const liveQueriesOnScreen = queryCache.findAll({ active: true });
+  const queryKeys = liveQueriesOnScreen.map((query) => {
+    return query.queryKey;
+  });
 
-    const queryKeys = liveQueriesOnScreen.map((query) => {
-        return query.queryKey;
-    });
+  // console.log({ queryKeys })
 
-    // console.log({ queryKeys })
+  const { mutate: updateTripFun } = useMutation({
+    mutationFn: (data) => {
+      console.log("first");
+      return updateTrip(_id, data);
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["trips"]);
+      navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
 
-    const { mutate: updateTripFun } = useMutation({
-        mutationFn: (data) => updateTrip(_id, data),
-        onSuccess: () => {
-            // Invalidate and refetch
-            queryClient.invalidateQueries(["trips"]);
-            navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
-        },
-        onError: (e) => {
-            console.log(e);
-        },
-    });
+  const handleSubmit = () => {
+    updateTripFun(data);
+  };
 
-    const handleSubmit = () => {
-        updateTripFun(data);
-    };
+  return (
+    <>
+      <View style={styles.container}>
+        <ImagePickerC
+          setImage={setImage}
+          image={image}
+          style={styles.image}
+          onImagePicked={(imageUri) =>
+            setData({ ...data, tripImage: imageUri })
+          }
+          imageData={data.tripImage}
+        />
 
-    return (
+        <Update data={data} setData={setData} />
 
-        <>
-            <View style={styles.container}>
-                <ImagePickerC
-                    style={styles.image}
-                    onImagePicked={(imageUri) =>
-                        setData({ ...data, tripImage: imageUri })
-
-                    } imageData={data.tripImage}
-                />
-
-                <Update data={data} setData={setData} />
-
-                <View style={styles.buttonContainer}>
-                    <Button title="Update Trip" onPress={handleSubmit} color="darkblue" />
-                </View>
-            </View>
-        </>
-    );
+        <View style={styles.buttonContainer}>
+          <Button title="Update Trip" onPress={handleSubmit} color="darkblue" />
+        </View>
+      </View>
+    </>
+  );
 };
 
 export default UpdateTrip;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        padding: 20,
-        backgroundColor: "#fff",
-    },
-    buttonContainer: {
-        marginTop: 20,
-        borderRadius: 7,
-        overflow: "hidden",
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  buttonContainer: {
+    marginTop: 20,
+    borderRadius: 7,
+    overflow: "hidden",
+  },
 
-    image: {
-        width: "100%",
-        height: 200,
-        borderRadius: 7,
-        marginBottom: 20,
-        borderColor: "#D3D3D3",
-        borderWidth: 1,
-    },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 7,
+    marginBottom: 20,
+    borderColor: "#D3D3D3",
+    borderWidth: 1,
+  },
 });

@@ -37,20 +37,23 @@ const createTrip = async (data) => {
 };
 
 const updateTrip = async (id, data) => {
+  console.log("first2");
   const formData = new FormData();
 
   for (const key in data) {
     if (key != "tripImage") {
       formData.append(key, data[key]);
     } else {
-      formData.append("tripImage", {
-        name: data.tripImage,
-        type: "image/jpeg",
-        uri: data.tripImage,
-      });
+      console.log(data.tripImage);
+      if (data.tripImage?.includes("file"))
+        formData.append("tripImage", {
+          name: data.tripImage,
+          type: "image/jpeg",
+          uri: data.tripImage,
+        });
     }
   }
-  console.log("HELLLLLLO", formData)
+  console.log("HELLLLLLO", formData);
   const res = await instance.put(`/trips/${id}`, formData);
   return res.data;
 };

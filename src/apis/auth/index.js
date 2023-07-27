@@ -12,11 +12,12 @@ const signUp = async (userInfo) => {
     if (key != "image") {
       formData.append(key, userInfo[key]);
     } else {
-      formData.append("image", {
-        name: userInfo.image,
-        type: "image/jpeg",
-        uri: userInfo.image,
-      });
+      if (userInfo.image)
+        formData.append("image", {
+          name: userInfo.image,
+          type: "image/jpeg",
+          uri: userInfo.image,
+        });
     }
   }
 
