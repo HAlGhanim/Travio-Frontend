@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -5,33 +6,32 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useContext, useState } from "react";
-import UserContext from "../context/UserContext";
-import { signIn } from "../apis/auth";
-import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
-import ROUTES from "../navigation/index";
 import { useMutation } from "@tanstack/react-query";
 import jwt_decode from "jwt-decode";
+import UserContext from "../context/UserContext";
+import { signIn } from "../apis/auth";
+import { saveToken } from "../apis/auth/storage";
+import ROUTES from "../navigation/index";
 
 const SignIn = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [errorText, setErrorText] = useState("");
   const { setUser } = useContext(UserContext);
   const navigation = useNavigation();
 
-  const {
-    mutate: signinFunction,
-    isLoading,
-    error,
-  } = useMutation({
+  const { mutate: signinFunction, isLoading } = useMutation({
     mutationFn: () => signIn(userInfo),
     onSuccess: (data) => {
       saveToken(data.token);
       const userObj = jwt_decode(data.token);
       setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+    },
+    onError: (error) => {
+      setErrorText(error.response?.data?.error?.message || "An error occurred");
     },
   });
 
@@ -61,7 +61,11 @@ const SignIn = () => {
               onChangeText={handleChange("username")}
               value={values.username}
               style={styles.input}
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
+
             {touched.username && errors.username && (
               <Text style={styles.error}>{errors.username}</Text>
             )}
@@ -72,10 +76,16 @@ const SignIn = () => {
               value={values.password}
               secureTextEntry
               style={styles.input}
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
+
             {touched.password && errors.password && (
               <Text style={styles.error}>{errors.password}</Text>
             )}
+
+            {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
 
             <TouchableOpacity
               style={styles.button}
@@ -110,6 +120,8 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     marginBottom: 10,
+    height: 50,
+    width: 200,
   },
   button: {
     backgroundColor: "blue",
