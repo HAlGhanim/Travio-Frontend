@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
-import * as Yup from "yup"; 
+import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
@@ -20,16 +20,22 @@ import UserContext from "../context/UserContext";
 const SignUp = () => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+  const [errorText, setErrorText] = useState("");
   const { setUser } = useContext(UserContext);
   const navigation = useNavigation();
 
-  const { mutate: signupFunction, error } = useMutation({
+  const { mutate: signupFunction } = useMutation({
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
       const userObj = jwt_decode(data.token);
       setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+    },
+    onError: (error) => {
+      if (error.response?.data?.error?.message.includes("E11000")) {
+        setErrorText("This user already exists");
+      }
     },
   });
 
@@ -142,6 +148,8 @@ const SignUp = () => {
             {touched.passwordConfirmation && errors.passwordConfirmation && (
               <Text style={styles.error}>{errors.passwordConfirmation}</Text>
             )}
+
+            {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Signup</Text>

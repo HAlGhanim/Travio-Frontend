@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { deleteTrip, getTripById } from "../apis/trips/index"; // import your API function
+import { deleteTrip, getTripById } from "../apis/trips/index";
 import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
