@@ -27,7 +27,8 @@ const SignUp = () => {
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(true);
+      const userObj = jwt_decode(data.token);
+      setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
   });

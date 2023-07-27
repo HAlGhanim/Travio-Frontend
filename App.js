@@ -22,7 +22,7 @@ export default function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={new QueryClient({})}>
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer>
           <BottomBar2 />

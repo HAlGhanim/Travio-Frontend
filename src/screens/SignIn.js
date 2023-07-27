@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
+import jwt_decode from "jwt-decode";
 import UserContext from "../context/UserContext";
 import { signIn } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
@@ -25,7 +26,8 @@ const SignIn = () => {
     mutationFn: () => signIn(userInfo),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(true);
+      const userObj = jwt_decode(data.token);
+      setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
     onError: (error) => {
