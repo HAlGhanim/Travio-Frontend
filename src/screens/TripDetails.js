@@ -1,4 +1,11 @@
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteTrip, getTripById } from "../apis/trips/index"; // import your API function
@@ -23,7 +30,6 @@ const TripDetails = ({ navigation, route }) => {
       "Are your sure?",
       "Are you sure you want to delete this trip?",
       [
-
         {
           text: "Yes",
           onPress: () => {
@@ -49,11 +55,8 @@ const TripDetails = ({ navigation, route }) => {
     },
   });
   const handleDelete = () => {
-    showConfirmDialog()
-
-
+    showConfirmDialog();
   };
-
 
   if (isLoading) return <Text>Loading...</Text>;
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
@@ -87,17 +90,12 @@ const TripDetails = ({ navigation, route }) => {
                     <Ionicons name="create-outline" size={18} color="black" />
                     <Text style={styles.buttonText}>Edit</Text>
                   </View>
-
                 </TouchableOpacity>
 
                 <TouchableOpacity
-
-
                   style={styles.deleteButton}
                   onPress={handleDelete}
-
                 >
-
                   <View style={styles.buttonContent}>
                     {showBox}
                     <Ionicons name="trash-outline" size={18} color="black" />
