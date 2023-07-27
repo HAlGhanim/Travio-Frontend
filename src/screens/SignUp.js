@@ -20,16 +20,22 @@ import jwt_decode from 'jwt-decode'
 const SignUp = () => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+  const [errorText, setErrorText] = useState("");
   const { setUser } = useContext(UserContext);
   const navigation = useNavigation();
 
-  const { mutate: signupFunction, error } = useMutation({
+  const { mutate: signupFunction } = useMutation({
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
       const userObj = jwt_decode(data.token);
       setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+    },
+    onError: (error) => {
+      if (error.response?.data?.error?.message.includes("E11000")) {
+        setErrorText("This user already exists");
+      }
     },
   });
 
@@ -142,6 +148,8 @@ const SignUp = () => {
             {touched.passwordConfirmation && errors.passwordConfirmation && (
               <Text style={styles.error}>{errors.passwordConfirmation}</Text>
             )}
+
+            {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Signup</Text>
