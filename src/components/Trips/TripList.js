@@ -1,13 +1,13 @@
 import React from "react";
 import { FlatList, View, Text, StyleSheet, Button } from "react-native";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TripCard from "./TripCard";
 import { getAllTrips } from "../../apis/trips/index";
 
 const TripList = () => {
+  const clientQuery = useQueryClient();
   const {
     data: trips,
-    isLoading,
     isFetching,
     refetch,
   } = useQuery({
@@ -15,10 +15,18 @@ const TripList = () => {
     queryFn: () => getAllTrips(),
   });
 
+  console.log("Trips list");
+  clientQuery.invalidateQueries({
+    predicate: (query) => {
+      console.log("[KEYS - from trip list]:", query.queryKey[0]);
+    },
+  });
+
   if (isFetching) return <Text>Loading...</Text>;
 
   return (
     <>
+      <Button title="REFROMTRIPS" onPress={() => refetch()} />
       <FlatList
         data={trips}
         keyExtractor={(item) => item._id}

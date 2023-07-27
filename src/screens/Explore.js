@@ -7,13 +7,19 @@ import { getAllTrips } from "../apis/trips";
 const Explore = () => {
   const clientQuery = useQueryClient();
 
+  console.log("explore");
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Explore the world with us!</Text>
-
+      {/* <Button
+        title="REFETCH"
+        onPress={() => clientQuery.invalidateQueries(["trips"])}
+      /> */}
       <TripList />
     </SafeAreaView>
   );
+  i;
 };
 
 export default Explore;
@@ -31,6 +37,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     marginTop: 10,
-    color: "darkblue",
+    color: "black",
   },
 });

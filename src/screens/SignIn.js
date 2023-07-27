@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation/index";
 import { useMutation } from "@tanstack/react-query";
+import jwt_decode from "jwt-decode";
 
 const SignIn = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -28,7 +29,8 @@ const SignIn = () => {
     mutationFn: () => signIn(userInfo),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(true);
+      const userObj = jwt_decode(data.token);
+      setUser(userObj);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
   });

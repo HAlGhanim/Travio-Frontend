@@ -1,9 +1,10 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
 
-const ImagePickerC = ({ onImagePicked, style }) => {
+const ImagePickerC = ({ onImagePicked, style, children }) => {
   const [image, setImage] = useState(null);
   const getPremisstion = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -34,11 +35,13 @@ const ImagePickerC = ({ onImagePicked, style }) => {
   return (
     <Pressable onPress={pickImage}>
       <View style={style}>
-        {image && (
+        {image ? (
           <Image
             source={{ uri: image }}
             style={{ width: "100%", height: "100%" }}
           />
+        ) : (
+          children
         )}
       </View>
     </Pressable>
@@ -47,13 +50,4 @@ const ImagePickerC = ({ onImagePicked, style }) => {
 
 export default ImagePickerC;
 
-const styles = StyleSheet.create({
-  // image: {
-  //   width: 100,
-  //   height: 100,
-  //   backgroundColor: "gray",
-  //   // borderRadius: "100%",
-  //   margin: 17,
-  //   overflow: "hidden",
-  // },
-});
+const styles = StyleSheet.create({});
