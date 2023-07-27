@@ -1,7 +1,14 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useContext, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { deleteTrip, getTripById } from "../apis/trips/index"; // import your API function
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteTrip, getTripById } from "../apis/trips/index";
 import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,25 +17,46 @@ import UserContext from "../context/UserContext";
 const TripDetails = ({ navigation, route }) => {
   const { user } = useContext(UserContext);
   const _id = route.params._id;
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const {
     data: trip,
     isLoading,
     isError,
   } = useQuery(["trip", _id], () => getTripById(_id));
 
-  // const { mutate: deleteTripFun } = useMutation({
-  //   mutationFn: (data) => deleteTrip(_id),
-  //   onSuccess: () => {
-  //     // Invalidate and refetch
-  //     queryClient.invalidateQueries(["trips"]);
-  //     navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
-  //     alert("Trip deleted successfully!");
-  //   },
-  // });
-  // const handleDelete = () => {
-  //   deleteTripFun();
-  // };
+  const { mutate: deleteTripFun } = useMutation({
+    mutationFn: () => deleteTrip(_id),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["trips"]);
+      navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+      alert("Trip deleted successfully!");
+    },
+    onError: (error) => {
+      console.log("Error:", error);
+    },
+  });
+  const handleDelete = () => {
+    Alert.alert(
+      "Confirmation",
+      "Are you sure you want to delete this trip?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            console.log("OK Pressed");
+            deleteTripFun();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   if (isLoading) return <Text>Loading...</Text>;
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
@@ -66,7 +94,7 @@ const TripDetails = ({ navigation, route }) => {
 
                 <TouchableOpacity
                   style={styles.deleteButton}
-                  // onPress={handleDelete}
+                  onPress={handleDelete}
                 >
                   <View style={styles.buttonContent}>
                     <Ionicons name="trash-outline" size={18} color="black" />

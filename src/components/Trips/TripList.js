@@ -8,7 +8,7 @@ const TripList = () => {
   const clientQuery = useQueryClient();
   const {
     data: trips,
-    isFetching,
+    isLoading,
     refetch,
   } = useQuery({
     queryKey: ["trips"],
@@ -22,11 +22,11 @@ const TripList = () => {
     },
   });
 
-  if (isFetching) return <Text>Loading...</Text>;
+  if (isLoading) return <Text>Loading...</Text>;
 
   return (
     <>
-      <Button title="REFROMTRIPS" onPress={() => refetch()} />
+      {/* <Button title="REFROMTRIPS" onPress={() => refetch()} /> */}
       <FlatList
         data={trips}
         keyExtractor={(item) => item._id}

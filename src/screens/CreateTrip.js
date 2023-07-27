@@ -21,6 +21,7 @@ const CreateTrip = ({ navigation }) => {
     mutationFn: () => createTrip(data),
     onSuccess: () => {
       // Invalidate and refetch
+      setData({});
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
