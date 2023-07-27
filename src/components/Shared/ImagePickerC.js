@@ -2,8 +2,9 @@ import { Image, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { BASE_URL } from "../../apis";
 
-const ImagePickerC = ({ onImagePicked, style }) => {
+const ImagePickerC = ({ onImagePicked, style, imageData = null }) => {
   const [image, setImage] = useState(null);
   const getPremisstion = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,9 +37,9 @@ const ImagePickerC = ({ onImagePicked, style }) => {
   return (
     <Pressable onPress={pickImage}>
       <View style={style}>
-        {image && (
+        {(image || imageData) && (
           <Image
-            source={{ uri: image }}
+            source={{ uri: image || `${BASE_URL}/${imageData}` }}
             style={{ width: "100%", height: "100%" }}
           />
         )}

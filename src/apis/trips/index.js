@@ -53,7 +53,7 @@ const updateTrip = async (id, data) => {
       });
     }
   }
-
+  console.log("HELLLLLLO", formData)
   const res = await instance.put(`/trips/${id}`, formData);
   return res.data;
 };

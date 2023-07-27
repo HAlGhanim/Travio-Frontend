@@ -21,10 +21,18 @@ const Update = ({ data, setData }) => {
                 onChangeText={(value) => setData({ ...data, description: value })}
                 multiline
             />
+
+
+
+
+
+
         </View>
     )
 }
 
 export default Update
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})

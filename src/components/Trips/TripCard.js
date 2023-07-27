@@ -25,7 +25,7 @@ const TripCard = ({ trip }) => {
           {/* <Text style={styles.description}>{trip.description}</Text> */}
         </View>
       </View>
-    </Pressable>
+    </Pressable >
   );
 };
 

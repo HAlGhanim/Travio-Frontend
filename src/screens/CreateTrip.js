@@ -7,7 +7,7 @@ import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
-import { useFocusEffect } from "@react-navigation/native";
+
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
@@ -34,7 +34,8 @@ const CreateTrip = ({ navigation }) => {
   const handleSubmit = () => {
     createTripFun();
   };
-  //console.log(data);
+  console.log(data);
+
 
   return (
     <>

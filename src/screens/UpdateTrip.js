@@ -56,7 +56,7 @@ const UpdateTrip = ({ navigation, route }) => {
     const handleSubmit = () => {
         updateTripFun(data);
     };
-    //console.log(data);
+    console.log(data);
 
     return (
         <>
@@ -65,13 +65,14 @@ const UpdateTrip = ({ navigation, route }) => {
                     style={styles.image}
                     onImagePicked={(imageUri) =>
                         setData({ ...data, tripImage: imageUri })
-                    }
+
+                    } imageData={data.tripImage}
                 />
 
                 <Update data={data} setData={setData} />
 
                 <View style={styles.buttonContainer}>
-                    <Button title="update Trip" onPress={handleSubmit} color="darkblue" />
+                    <Button title="Update Trip" onPress={handleSubmit} color="darkblue" />
                 </View>
             </View>
         </>
