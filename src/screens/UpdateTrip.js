@@ -7,25 +7,25 @@ import Update from "../components/Trips/Update";
 import ROUTES from "../navigation";
 
 const UpdateTrip = ({ navigation, route }) => {
-    const _id = route.params._id
+    const _id = route.params._id;
     const [data, setData] = useState({});
 
     const queryClient = useQueryClient();
 
     const { } = useQuery({
-        queryKey: ['trip', _id],
+        queryKey: ["trip", _id],
         queryFn: () => getTripById(_id),
         onSuccess: (data) => {
             setData({
                 title: data.title,
                 tripImage: data.tripImage,
-                description: data.description
-            })
+                description: data.description,
+            });
         },
         onError: (error) => {
-            console.log({ error })
-        }
-    })
+            console.log({ error });
+        },
+    });
 
     const queryCache = queryClient.getQueryCache();
 
@@ -40,25 +40,36 @@ const UpdateTrip = ({ navigation, route }) => {
     const { mutate: updateTripFun } = useMutation({
         mutationFn: (data) => updateTrip(_id, data),
         onSuccess: () => {
-            console.log("HELOO")
             // Invalidate and refetch
 
-            queryClient.invalidateQueries(['trips'])
+            queryClient.invalidateQueries(["trips"]);
             navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
-
         },
         onError: (e) => {
-            console.log(e)
-        }
-
+            console.log(e);
+        },
     });
 
     const handleSubmit = () => {
         updateTripFun(data);
     };
-    console.log(data);
 
     return (
+        // <>
+        //   <View style={styles.container}>
+        //     <ImagePickerC
+        //       style={styles.image}
+        //       onImagePicked={(imageUri) =>
+        //         setData({ ...data, tripImage: imageUri })
+        //       }
+        //     />
+
+        // const handleSubmit = () => {
+        //     updateTripFun(data);
+        // };
+        // console.log(data);
+
+        // return (
         <>
             <View style={styles.container}>
                 <ImagePickerC
