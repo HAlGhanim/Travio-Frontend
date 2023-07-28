@@ -8,13 +8,12 @@ import {
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation } from "@tanstack/react-query";
-import { signup } from "../apis/auth";
+import { signUp } from "../apis/auth";
 import { saveToken } from "../apis/auth/storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
-
 
 const SignUp = () => {
   const [image, setImage] = useState(null);
@@ -22,7 +21,7 @@ const SignUp = () => {
   const navigation = useNavigation();
 
   const { mutate: signupFunction, error } = useMutation({
-    mutationFn: () => signup({ ...userInfo, image }),
+    mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
