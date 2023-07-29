@@ -18,7 +18,7 @@ function BottomBar2() {
   return (
     <Tab.Navigator
       screenOptions={{
-        activeTintColor: "#002147",
+        activeTintColor: "darkblue",
         inactiveTintColor: "black",
         headerShown: user ? true : false,
       }}

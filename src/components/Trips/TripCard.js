@@ -17,7 +17,7 @@ const TripCard = ({ trip = {} }) => {
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
         </Text>
-        {/* <Text>Location: {trip.location}</Text> */}
+
         <View style={styles.card}>
           <Image
             source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
