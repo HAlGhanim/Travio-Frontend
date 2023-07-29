@@ -92,11 +92,17 @@ const SignIn = () => {
               onPress={handleSubmit}
               disabled={isLoading}
             >
-              <Text style={styles.buttonText}>Signin</Text>
+              <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleSignup}>
-              <Text style={styles.buttonText}>Signup</Text>
-            </TouchableOpacity>
+            <View style={styles.signUpFlex}>
+              <Text style={styles.signUpText2}>Don't Have an account?</Text>
+              <TouchableOpacity
+                style={styles.signUpText}
+                onPress={handleSignup}
+              >
+                <Text style={styles.signUpText}> Sign up.</Text>
+              </TouchableOpacity>
+            </View>
           </>
         )}
       </Formik>
@@ -132,6 +138,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+  },
+  signUpText: {
+    color: "blue",
+    textAlign: "center",
+  },
+  signUpText2: {
+    color: "gray",
+    textAlign: "center",
+  },
+  signUpFlex: {
+    flexDirection: "row",
+    marginTop: 10,
   },
 });
 
