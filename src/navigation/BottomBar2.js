@@ -10,6 +10,7 @@ import UserContext from "../context/UserContext";
 import AuthNavigator from "./AuthNavigator";
 import ExploreNavigation from "./ExploreNavigation";
 import { Text, View } from "react-native";
+import ProfileNavigation from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ function BottomBar2() {
   return (
     <Tab.Navigator
       screenOptions={{
-        activeTintColor: "#002147",
+        activeTintColor: "darkblue",
         inactiveTintColor: "black",
         headerShown: user ? true : false,
       }}
@@ -51,8 +52,8 @@ function BottomBar2() {
       />
 
       <Tab.Screen
-        name={ROUTES.HEDERROUTES.PROFILE}
-        component={user ? MyProfile : AuthNavigator}
+        name={ROUTES.HEDERROUTES.PROFILENAV}
+        component={user ? ProfileNavigation : AuthNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons

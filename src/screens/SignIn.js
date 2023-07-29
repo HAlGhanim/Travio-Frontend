@@ -92,11 +92,17 @@ const SignIn = () => {
               onPress={handleSubmit}
               disabled={isLoading}
             >
-              <Text style={styles.buttonText}>Signin</Text>
+              <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleSignup}>
-              <Text style={styles.buttonText}>Signup</Text>
-            </TouchableOpacity>
+            <View style={styles.signUpFlex}>
+              <Text style={styles.signUpText2}>Don't Have an account?</Text>
+              <TouchableOpacity
+                style={styles.signUpText}
+                onPress={handleSignup}
+              >
+                <Text style={styles.signUpText}> Sign up.</Text>
+              </TouchableOpacity>
+            </View>
           </>
         )}
       </Formik>
@@ -108,30 +114,49 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    height: 500,
+    height: "100%",
+    backgroundColor: "#fff",
+    padding: 20,
   },
   input: {
     backgroundColor: "#F2F2F2",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    width: 200,
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    width: "100%",
+    fontSize: 16,
   },
   error: {
     color: "red",
     marginBottom: 10,
-    height: 50,
-    width: 200,
+    width: "100%",
+    textAlign: "center",
   },
   button: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#007BFF",
+    padding: 15,
+    borderRadius: 10,
     marginTop: 20,
+    width: "100%",
   },
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  signUpText: {
+    color: "#007BFF",
+    textAlign: "center",
+    marginLeft: 5,
+  },
+  signUpText2: {
+    color: "gray",
+    textAlign: "center",
+  },
+  signUpFlex: {
+    flexDirection: "row",
+    marginTop: 10,
   },
 });
 

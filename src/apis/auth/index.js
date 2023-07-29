@@ -21,12 +21,17 @@ const signUp = async (userInfo) => {
     }
   }
 
-  const res = await instance.post("/users/signup", formData);
+  const res = await instance.post("/users/signup", formData, {
+    headers: {
+      Accept: "application/json. text/plain, /",
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 const profile = async (id) => {
   const res = await instance.get(`/users/profile/${id}`);
-  console.log(id);
+  console.log("herree", id);
   return res.data;
 };
 export { signIn, signUp, profile };
