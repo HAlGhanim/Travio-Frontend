@@ -23,8 +23,8 @@ const signUp = async (userInfo) => {
 
   const res = await instance.post("/users/signup", formData, {
     headers: {
-      Accept: "application/json, text/plain, /",
-      "content-type": "multipart/form-data",
+      Accept: "application/json. text/plain, /",
+      "Content-Type": "multipart/form-data",
     },
   });
   return res.data;

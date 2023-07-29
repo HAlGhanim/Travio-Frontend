@@ -34,8 +34,8 @@ const createTrip = async (data) => {
   }
   const res = await instance.post("/trips/", formData, {
     headers: {
-      Accept: "application/json, text/plain, /",
-      "content-type": "multipart/form-data",
+      Accept: "application/json. text/plain, /",
+      "Content-Type": "multipart/form-data",
     },
   });
   return res.data;
@@ -59,7 +59,12 @@ const updateTrip = async (id, data) => {
     }
   }
   console.log("HELLLLLLO", formData);
-  const res = await instance.put(`/trips/${id}`, formData);
+  const res = await instance.put(`/trips/${id}`, formData, {
+    headers: {
+      Accept: "application/json. text/plain, /",
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
