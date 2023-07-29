@@ -16,6 +16,7 @@ export default function App() {
     if (token) {
       const userObj = jwt_decode(token);
       setUser(userObj);
+      console.log(user);
     }
   };
 

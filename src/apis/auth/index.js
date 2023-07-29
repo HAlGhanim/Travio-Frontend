@@ -24,5 +24,9 @@ const signUp = async (userInfo) => {
   const res = await instance.post("/users/signup", formData);
   return res.data;
 };
-
-export { signIn, signUp };
+const profile = async (id) => {
+  const res = await instance.get(`/users/profile/${id}`);
+  console.log(id);
+  return res.data;
+};
+export { signIn, signUp, profile };
