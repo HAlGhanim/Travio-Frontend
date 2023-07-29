@@ -16,7 +16,7 @@ import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation";
 import UserContext from "../context/UserContext";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 const SignUp = () => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});
@@ -116,6 +116,9 @@ const SignUp = () => {
               placeholder="Username"
               onChangeText={handleChange("username")}
               value={values.username}
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
             {touched.username && errors.username && (
               <Text style={styles.error}>{errors.username}</Text>
@@ -124,6 +127,9 @@ const SignUp = () => {
               placeholder="Email"
               onChangeText={handleChange("email")}
               value={values.email}
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
             {touched.email && errors.email && (
               <Text style={styles.error}>{errors.email}</Text>
@@ -134,6 +140,9 @@ const SignUp = () => {
               onChangeText={handleChange("password")}
               value={values.password}
               secureTextEntry
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
             {touched.password && errors.password && (
               <Text style={styles.error}>{errors.password}</Text>
@@ -144,6 +153,9 @@ const SignUp = () => {
               onChangeText={handleChange("passwordConfirmation")}
               value={values.passwordConfirmation}
               secureTextEntry
+              onFocus={() => {
+                setErrorText("");
+              }}
             />
             {touched.passwordConfirmation && errors.passwordConfirmation && (
               <Text style={styles.error}>{errors.passwordConfirmation}</Text>
