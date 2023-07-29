@@ -16,52 +16,28 @@ import { profile } from "../apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BASE_URL } from "../apis";
-
+import TripCard from "../components/Trips/TripCard";
 import UserTrips from "../components/Trips/UserTrips";
-const MyProfile = ({ navigation, route }) => {
+const OtherProfiles = ({ navigation, route }) => {
   const { user, setUser } = useContext(UserContext);
-  const name = route.params?._id;
+  const name = route.params._id;
   console.log("herrrrrreee", name);
   console.log(user);
-  const handleLogout = () => {
-    setUser(false);
-    removeToken();
-  };
 
+  //pass the userid from the the card created by the user
   const {
-    data: profileFun,
+    data: profileFun, //to get the user
     isLoading,
     refetch,
     isError,
   } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => profile(user._id),
+    queryKey: ["profile", name],
+    queryFn: () => profile(name._id),
   });
 
   console.log(profileFun?.trips);
   //should be moved to naivigation
-
-  useEffect(() => {
-    if (user) {
-      navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity
-            style={{ marginLeft: 15 }}
-            onPress={() => {
-              handleLogout();
-            }}
-          >
-            <MaterialCommunityIcons name="logout" size={24} color="black" />
-          </TouchableOpacity>
-        ),
-      });
-    } else {
-      navigation.setOptions({
-        headerRight: () => null,
-      });
-    }
-  }, [navigation, user]);
-
+  if (isLoading) return <Text>Loading...</Text>;
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -76,17 +52,13 @@ const MyProfile = ({ navigation, route }) => {
 
         <View style={styles.info}>
           <Text style={styles.username}>@{profileFun?.username}</Text>
-          <Button title="Edit Profile" onPress={() => {}} />
         </View>
       </View>
 
       <Text style={styles.bio}>{profileFun?.bio}</Text>
+      {/* <userTrips trips={profileFun?.trips} /> */}
       <SafeAreaView style={styles.view}>
-        <UserTrips
-          trips={profileFun?.trips}
-          isLaoding={isLoading}
-          refetch={refetch}
-        />
+        <UserTrips trips={profileFun?.trips} />
       </SafeAreaView>
     </View>
   );
@@ -131,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyProfile;
+export default OtherProfiles;

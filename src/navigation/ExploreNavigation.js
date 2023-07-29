@@ -5,6 +5,8 @@ import ROUTES from ".";
 import UpdateTrip from "../screens/UpdateTrip";
 import Explore from "../screens/Explore";
 import TripDetails from "../screens/TripDetails";
+import MyProfile from "../screens/MyProfile";
+import OtherProfiles from "../screens/OtherProfiles";
 
 const Stack = createStackNavigator();
 export default function ExploreNavigation() {
@@ -18,6 +20,10 @@ export default function ExploreNavigation() {
       <Stack.Screen
         name={ROUTES.HEDERROUTES.UPDATETRIP}
         component={UpdateTrip}
+      />
+      <Stack.Screen
+        name={ROUTES.HEDERROUTES.OHERPROFILES}
+        component={OtherProfiles}
       />
     </Stack.Navigator>
   );

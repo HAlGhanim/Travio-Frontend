@@ -6,6 +6,7 @@ const ROUTES = {
     PROFILE: "Account",
     TRIPDETAILS: "trip detail",
     UPDATETRIP: "tripEdit",
+    OHERPROFILES: "Profile",
   },
   AUTHROUTES: {
     SIGNIN: "signIn",
