@@ -6,7 +6,7 @@ const SplashScreenC = () => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <LottieView
-        source={require("../../assets/animation_lknc1n2d.json")}
+        source={require("../../assets/animation_plane.json")}
         autoPlay
         loop
       />
