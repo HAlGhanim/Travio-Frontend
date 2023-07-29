@@ -3,20 +3,21 @@ import { FlatList, View, Text, StyleSheet, Button } from "react-native";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TripCard from "./TripCard";
 import { getAllTrips } from "../../apis/trips/index";
+import { profile } from "../../apis/auth";
 
-const TripList = () => {
+const UserTrips = ({ user }) => {
   const clientQuery = useQueryClient();
   const {
-    data: trips,
+    data: profileFun,
     isLoading,
     refetch,
+    isError,
   } = useQuery({
-    queryKey: ["trips"],
-    queryFn: () => getAllTrips(),
+    queryKey: ["profile"],
+    queryFn: () => profile(user._id),
   });
-
-  console.log("Trips list");
-  console.log(trips);
+  console.log("userTrips");
+  console.log(profileFun);
   clientQuery.invalidateQueries({
     predicate: (query) => {
       console.log("[KEYS - from trip list]:", query.queryKey[0]);
@@ -29,7 +30,7 @@ const TripList = () => {
     <>
       {/* <Button title="REFROMTRIPS" onPress={() => refetch()} /> */}
       <FlatList
-        data={trips}
+        data={profileFun?.trips}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => <TripCard trip={item} />}
       />
@@ -39,4 +40,6 @@ const TripList = () => {
 
 const styles = StyleSheet.create({});
 
-export default TripList;
+export default UserTrips;
+
+//userTrips
