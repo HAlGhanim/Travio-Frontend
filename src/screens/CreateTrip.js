@@ -19,6 +19,7 @@ const CreateTrip = ({ navigation }) => {
 
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+  const [errorText, setErrorText] = useState("");
   const [location, setLocation] = useState(null);
 
   const { mutate: createTripFun } = useMutation({
@@ -32,7 +33,38 @@ const CreateTrip = ({ navigation }) => {
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
     onError: (error) => {
-      console.log(error);
+      if (error.response?.data?.error?.message.includes("title")) {
+        setErrorText("Title is required");
+      }
+      if (error.response?.data?.error?.message.includes("description")) {
+        setErrorText("Description is required");
+      }
+      if (error.response?.data?.error?.message.includes("tripImage")) {
+        setErrorText("Image is required");
+      }
+      if (
+        error.response?.data?.error?.message.includes("title" && "description")
+      ) {
+        setErrorText("Title and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required."
+      ) {
+        setErrorText("Image and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Image and title are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Title, description, and image are required");
+      }
     },
   });
 
@@ -86,7 +118,8 @@ const CreateTrip = ({ navigation }) => {
             </View>
           </ImagePickerC>
 
-          <Create data={data} setData={setData} />
+          <Create data={data} setData={setData} setErrorText={setErrorText} />
+          {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
 
           <View style={styles.buttonContainer}>
             <Button title="Create Trip" onPress={handleSubmit} color="black" />
@@ -100,6 +133,10 @@ const CreateTrip = ({ navigation }) => {
 export default CreateTrip;
 
 const styles = StyleSheet.create({
+  error: {
+    color: "red",
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
     padding: 20,
