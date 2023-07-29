@@ -16,6 +16,7 @@ import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
 import UserContext from "../context/UserContext";
+import { getLocationAddress } from "../apis/location";
 const { height } = Dimensions.get("window");
 
 const TripDetails = ({ navigation, route }) => {
@@ -62,6 +63,12 @@ const TripDetails = ({ navigation, route }) => {
     showConfirmDialog();
   };
 
+  const { data: location } = useQuery({
+    queryKey: ["location"],
+    queryFn: () => getLocationAddress(trip.longitude, trip.latitude),
+    enabled: !!trip?.longitude,
+  });
+  console.log(location);
   if (isLoading) return <Text>Loading...</Text>;
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
 
@@ -77,7 +84,21 @@ const TripDetails = ({ navigation, route }) => {
               source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
               style={styles.image}
             />
-            <Text style={styles.title}>{trip.title}</Text>
+            <Text style={styles.title}>{trip.title} </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 15,
+                marginBottom: 10,
+              }}
+            >
+              <Text style={styles.title}>Location:</Text>
+              <Text>
+                {location === "No location provided" && location}
+                {location?.countryName} {location?.city}
+              </Text>
+            </View>
             <Text style={styles.description}>{trip.description}</Text>
 
             <View style={styles.buttonsContainer}>
@@ -153,7 +174,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   description: {
     fontSize: 18,

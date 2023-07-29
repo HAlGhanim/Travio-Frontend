@@ -6,23 +6,24 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
+import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
 
-  // queryClient.invalidateQueries({
-  //   predicate: (query) => {
-  //     // console.log("[KEYS - create trip]: ", query.queryKey[0]);
-  //   },
-  // });
-
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+
   const [location, setLocation] = useState(null);
 
   const { mutate: createTripFun } = useMutation({
-    mutationFn: () => createTrip(data),
+    mutationFn: () =>
+      createTrip({
+        ...data,
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+      }),
     onSuccess: () => {
       // Invalidate and refetch
       setData({});
@@ -47,6 +48,7 @@ const CreateTrip = ({ navigation }) => {
     });
     setData({ ...data, location: event.nativeEvent.coordinate });
   };
+  console.log(location);
 
   return (
     <>

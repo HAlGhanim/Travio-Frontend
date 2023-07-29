@@ -163,19 +163,54 @@ const SignUp = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: "hidden",
+    marginBottom: 20,
+    backgroundColor: "#e0e0e0", // this is a light grey, you can replace it with any color you like
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "#F2F2F2",
+    borderRadius: 10,
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    fontSize: 16,
+  },
   error: {
     color: "red",
-    marginBottom: 10,
+    marginBottom: 15,
+    alignSelf: "flex-start",
   },
   button: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
+    width: "80%",
+    height: 50,
+    backgroundColor: "#007BFF",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
     marginTop: 20,
   },
   buttonText: {
     color: "white",
-    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
