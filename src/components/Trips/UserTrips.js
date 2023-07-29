@@ -1,11 +1,11 @@
 import React from "react";
-import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
+import { FlatList, StyleSheet, RefreshControl, Text, View } from "react-native";
 
 import TripCard from "./TripCard";
 
 const UserTrips = ({ trips, isLoading, refetch }) => {
   if (isLoading) return <Text>Looding...</Text>;
-  // if (trips.length === 0) return <Text>No trips found</Text>;
+  if (trips?.length === 0 || !trips) return <Text>No trips found</Text>;
   return (
     <>
       <FlatList

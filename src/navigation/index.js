@@ -8,6 +8,7 @@ const ROUTES = {
     TRIPDETAILS: "trip detail",
     UPDATETRIP: "tripEdit",
     OHERPROFILES: "Profile",
+    UPDATEPROFILE: "Update Profile",
   },
   AUTHROUTES: {
     SIGNIN: "signIn",

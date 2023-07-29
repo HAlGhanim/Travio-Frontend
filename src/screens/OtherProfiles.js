@@ -1,32 +1,15 @@
-import {
-  Button,
-  FlatList,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useContext, useEffect } from "react";
-import UserContext from "../context/UserContext";
-import { removeToken } from "../apis/auth/storage";
+import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { profile } from "../apis/auth";
 import { useQuery } from "@tanstack/react-query";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BASE_URL } from "../apis";
-import TripCard from "../components/Trips/TripCard";
 import UserTrips from "../components/Trips/UserTrips";
 const OtherProfiles = ({ navigation, route }) => {
-  const { user, setUser } = useContext(UserContext);
   const name = route.params._id;
   console.log("herrrrrreee", name);
-  console.log(user);
 
-  //pass the userid from the the card created by the user
   const {
-    data: profileFun, //to get the user
+    data: profileFun,
     isLoading,
     refetch,
     isError,
@@ -35,8 +18,6 @@ const OtherProfiles = ({ navigation, route }) => {
     queryFn: () => profile(name._id),
   });
 
-  console.log(profileFun?.trips);
-  //should be moved to naivigation
   if (isLoading) return <Text>Loading...</Text>;
   return (
     <View style={styles.container}>
@@ -56,9 +37,13 @@ const OtherProfiles = ({ navigation, route }) => {
       </View>
 
       <Text style={styles.bio}>{profileFun?.bio}</Text>
-      {/* <userTrips trips={profileFun?.trips} /> */}
+
       <SafeAreaView style={styles.view}>
-        <UserTrips trips={profileFun?.trips} />
+        <UserTrips
+          trips={profileFun?.trips}
+          isLaoding={isLoading}
+          refetch={refetch}
+        />
       </SafeAreaView>
     </View>
   );

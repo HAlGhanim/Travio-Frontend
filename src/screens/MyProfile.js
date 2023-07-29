@@ -2,30 +2,19 @@ import {
   Button,
   Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
-import { removeToken } from "../apis/auth/storage";
 import { profile } from "../apis/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../apis";
-
 import UserTrips from "../components/Trips/UserTrips";
+import ROUTES from "../navigation";
 const MyProfile = ({ navigation, route }) => {
   const { user, setUser } = useContext(UserContext);
-  const name = route.params?._id;
-  console.log("herrrrrreee", name);
-  console.log(user);
-  const handleLogout = () => {
-    setUser(false);
-    removeToken();
-  };
 
   const {
     data: profileFun,
@@ -36,22 +25,6 @@ const MyProfile = ({ navigation, route }) => {
     queryKey: ["profile"],
     queryFn: () => profile(user._id),
   });
-
-  useEffect(() => {
-    if (user) {
-      navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity style={{ marginLeft: 15 }} onPress={handleLogout}>
-            <MaterialCommunityIcons name="logout" size={24} color="black" />
-          </TouchableOpacity>
-        ),
-      });
-    } else {
-      navigation.setOptions({
-        headerRight: () => null,
-      });
-    }
-  }, [navigation, user]);
 
   const updateProfile = () => {
     navigation.navigate(ROUTES.HEDERROUTES.UPDATEPROFILE);

@@ -34,4 +34,26 @@ const profile = async (id) => {
   console.log("herree", id);
   return res.data;
 };
-export { signIn, signUp, profile };
+const updateProfile = async (id, userInfo) => {
+  // const formData = new FormData();
+  // for (const key in userInfo) {
+  //   if (key != "image") {
+  //     formData.append(key, userInfo[key]);
+  //   } else {
+  //     if (userInfo.image)
+  //       formData.append("image", {
+  //         name: userInfo.image,
+  //         type: "image/jpeg",
+  //         uri: userInfo.image,
+  //       });
+  //   }
+  // }
+  // const res = await instance.put(`/users/profile/${id}`, formData, {
+  //   headers: {
+  //     Accept: "application/json. text/plain, /",
+  //     "Content-Type": "multipart/form-data",
+  //   },
+  // });
+  // return res.data;
+};
+export { signIn, signUp, profile, updateProfile };

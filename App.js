@@ -8,7 +8,9 @@ import jwt_decode from "jwt-decode";
 import * as SplashScreen from "expo-splash-screen";
 import SplashScreenC from "./src/components/SplashScreenC";
 import ThemeProvider from "./src/components/ThemeProvider";
-
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default function App() {
   const [user, setUser] = useState(null);
   const [appIsReady, setAppIsReady] = useState(false);

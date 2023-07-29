@@ -8,7 +8,7 @@ const TripCard = ({ trip = {} }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.cardContainer}>
+    <View style={[styles.cardContainer]}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate(ROUTES.HEDERROUTES.OHERPROFILES, {
