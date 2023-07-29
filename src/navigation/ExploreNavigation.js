@@ -20,10 +20,6 @@ export default function ExploreNavigation() {
         name={ROUTES.HEDERROUTES.UPDATETRIP}
         component={UpdateTrip}
       />
-      {/* <Stack.Screen
-        name={ROUTES.HEDERROUTES.UPDATEPROFILE}
-        component={EditProfile}
-      /> */}
     </Stack.Navigator>
   );
 }
