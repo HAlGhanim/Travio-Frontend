@@ -21,12 +21,7 @@ const signUp = async (userInfo) => {
     }
   }
 
-  const res = await instance.post("/users/signup", formData, {
-    headers: {
-      Accept: "application/json. text/plain, /",
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const res = await instance.post("/users/signup", formData);
   return res.data;
 };
 const profile = async (id) => {

@@ -1,6 +1,10 @@
 import { StyleSheet, TextInput, View } from "react-native";
 
-const Create = ({ data, setData }) => {
+const Create = ({ data, setData, setErrorText }) => {
+  const handleFocus = () => {
+    setErrorText("");
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -9,6 +13,7 @@ const Create = ({ data, setData }) => {
         placeholderTextColor="#A9A9A9"
         value={data.title}
         onChangeText={(value) => setData({ ...data, title: value })}
+        onFocus={handleFocus}
       />
 
       <TextInput
@@ -18,6 +23,7 @@ const Create = ({ data, setData }) => {
         value={data.description}
         onChangeText={(value) => setData({ ...data, description: value })}
         multiline
+        onFocus={handleFocus}
       />
     </View>
   );

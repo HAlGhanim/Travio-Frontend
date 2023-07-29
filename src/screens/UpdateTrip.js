@@ -10,6 +10,7 @@ const UpdateTrip = ({ navigation, route }) => {
   const _id = route.params._id;
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+  const [errorText, setErrorText] = useState("");
   const queryClient = useQueryClient();
 
   const {} = useQuery({
@@ -23,7 +24,7 @@ const UpdateTrip = ({ navigation, route }) => {
       });
     },
     onError: (error) => {
-      console.log({ error });
+      console.log(error);
     },
   });
 
@@ -47,8 +48,42 @@ const UpdateTrip = ({ navigation, route }) => {
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error) => {
+      if (error.response?.data?.error?.message.includes("E11000")) {
+        setErrorText("Trip already exists");
+      }
+      if (error.response?.data?.error?.message.includes("title")) {
+        setErrorText("Title is required");
+      }
+      if (error.response?.data?.error?.message.includes("description")) {
+        setErrorText("Description is required");
+      }
+      if (error.response?.data?.error?.message.includes("tripImage")) {
+        setErrorText("Image is required");
+      }
+      if (
+        error.response?.data?.error?.message.includes("title" && "description")
+      ) {
+        setErrorText("Title and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required."
+      ) {
+        setErrorText("Image and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Image and title are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Title, description, and image are required");
+      }
     },
   });
 
@@ -69,7 +104,8 @@ const UpdateTrip = ({ navigation, route }) => {
           imageData={data.tripImage}
         />
 
-        <Update data={data} setData={setData} />
+        <Update data={data} setData={setData} setErrorText={setErrorText} />
+        {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
 
         <View style={styles.buttonContainer}>
           <Button title="Update Trip" onPress={handleSubmit} color="darkblue" />
@@ -82,6 +118,11 @@ const UpdateTrip = ({ navigation, route }) => {
 export default UpdateTrip;
 
 const styles = StyleSheet.create({
+  error: {
+    color: "red",
+    marginBottom: 10,
+    textAlign: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
