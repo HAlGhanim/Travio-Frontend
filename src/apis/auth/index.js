@@ -26,7 +26,7 @@ const signUp = async (userInfo) => {
 };
 const profile = async (id) => {
   const res = await instance.get(`/users/profile/${id}`);
-  console.log(id);
+  console.log("herree", id);
   return res.data;
 };
 export { signIn, signUp, profile };

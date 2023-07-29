@@ -7,6 +7,7 @@ import { getToken } from "./src/apis/auth/storage";
 import jwt_decode from "jwt-decode";
 import * as SplashScreen from "expo-splash-screen";
 import SplashScreenC from "./src/components/SplashScreenC";
+import ThemeProvider from "./src/components/ThemeProvider";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -36,12 +37,14 @@ export default function App() {
   }
 
   return (
-    <QueryClientProvider client={new QueryClient({})}>
-      <UserContext.Provider value={{ user, setUser }}>
-        <NavigationContainer>
-          <BottomBar2 />
-        </NavigationContainer>
-      </UserContext.Provider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={new QueryClient({})}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <NavigationContainer>
+            <BottomBar2 />
+          </NavigationContainer>
+        </UserContext.Provider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
