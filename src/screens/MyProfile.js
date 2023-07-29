@@ -1,6 +1,5 @@
 import {
   Button,
-  FlatList,
   Image,
   SafeAreaView,
   ScrollView,
@@ -13,22 +12,23 @@ import React, { useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
 import { profile } from "../apis/auth";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BASE_URL } from "../apis";
-import TripCard from "../components/Trips/TripCard";
 import UserTrips from "../components/Trips/UserTrips";
+import ROUTES from "../navigation";
+import ProfileNavigation from "../navigation/ProfileNavigator";
+
 const MyProfile = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
 
-  console.log(user);
   const handleLogout = () => {
     setUser(false);
     removeToken();
   };
-  //pass the userid from the the card created by the user
+
   const {
-    data: profileFun, //to get the user
+    data: profileFun,
     isLoading,
     refetch,
     isError,
@@ -37,19 +37,11 @@ const MyProfile = ({ navigation }) => {
     queryFn: () => profile(user._id),
   });
 
-  console.log(profileFun?.trips);
-  //should be moved to naivigation
-
   useEffect(() => {
     if (user) {
       navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity
-            style={{ marginLeft: 15 }}
-            onPress={() => {
-              handleLogout();
-            }}
-          >
+          <TouchableOpacity style={{ marginLeft: 15 }} onPress={handleLogout}>
             <MaterialCommunityIcons name="logout" size={24} color="black" />
           </TouchableOpacity>
         ),
@@ -60,6 +52,10 @@ const MyProfile = ({ navigation }) => {
       });
     }
   }, [navigation, user]);
+
+  const updateProfile = () => {
+    navigation.navigate(ROUTES.HEDERROUTES.UPDATEPROFILE);
+  };
 
   return (
     <View style={styles.container}>
@@ -72,15 +68,17 @@ const MyProfile = ({ navigation }) => {
               : `${BASE_URL}/${profileFun?.image}`,
           }}
         />
-
         <View style={styles.info}>
           <Text style={styles.username}>@{profileFun?.username}</Text>
-          <Button title="Edit Profile" onPress={() => {}} />
+          <Button
+            title="Edit Profile"
+            onPress={updateProfile}
+            color="darkblue"
+          />
         </View>
       </View>
 
       <Text style={styles.bio}>{profileFun?.bio}</Text>
-      {/* <userTrips trips={profileFun?.trips} /> */}
       <SafeAreaView style={styles.view}>
         <UserTrips user={user} />
       </SafeAreaView>
@@ -119,7 +117,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#999",
   },
-
   bio: {
     padding: 20,
     fontSize: 16,
