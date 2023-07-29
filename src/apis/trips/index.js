@@ -32,7 +32,12 @@ const createTrip = async (data) => {
       });
     }
   }
-  const res = await instance.post("/trips/", formData);
+  const res = await instance.post("/trips/", formData, {
+    headers: {
+      Accept: "application/json, text/plain, /",
+      "content-type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 
