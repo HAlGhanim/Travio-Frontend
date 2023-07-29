@@ -45,6 +45,7 @@ const UpdateTrip = ({ navigation, route }) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["trips"]);
+      queryClient.invalidateQueries(["profile"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
     onError: (e) => {

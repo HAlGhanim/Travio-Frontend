@@ -1,20 +1,12 @@
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React, { useContext, useEffect } from "react";
-import UserContext from "../context/UserContext";
+import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { profile } from "../apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../apis";
 import UserTrips from "../components/Trips/UserTrips";
-import ROUTES from "../navigation";
-const MyProfile = ({ navigation, route }) => {
-  const { user, setUser } = useContext(UserContext);
+const OtherProfiles = ({ navigation, route }) => {
+  const name = route.params._id;
+  console.log("herrrrrreee", name);
 
   const {
     data: profileFun,
@@ -22,14 +14,11 @@ const MyProfile = ({ navigation, route }) => {
     refetch,
     isError,
   } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => profile(user._id),
+    queryKey: ["profile", name],
+    queryFn: () => profile(name._id),
   });
 
-  const updateProfile = () => {
-    navigation.navigate(ROUTES.HEDERROUTES.UPDATEPROFILE);
-  };
-
+  if (isLoading) return <Text>Loading...</Text>;
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -41,17 +30,14 @@ const MyProfile = ({ navigation, route }) => {
               : `${BASE_URL}/${profileFun?.image}`,
           }}
         />
+
         <View style={styles.info}>
           <Text style={styles.username}>@{profileFun?.username}</Text>
-          <Button
-            title="Edit Profile"
-            onPress={updateProfile}
-            color="darkblue"
-          />
         </View>
       </View>
 
       <Text style={styles.bio}>{profileFun?.bio}</Text>
+
       <SafeAreaView style={styles.view}>
         <UserTrips
           trips={profileFun?.trips}
@@ -94,6 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#999",
   },
+
   bio: {
     padding: 20,
     fontSize: 16,
@@ -101,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyProfile;
+export default OtherProfiles;

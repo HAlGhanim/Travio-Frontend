@@ -6,6 +6,7 @@ import EditProfile from "../screens/EditProfile";
 import MyProfile from "../screens/MyProfile";
 import TripDetails from "../screens/TripDetails";
 import UpdateTrip from "../screens/UpdateTrip";
+import OtherProfiles from "../screens/OtherProfiles";
 
 const Stack = createStackNavigator();
 export default function ProfileNavigation() {

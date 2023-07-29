@@ -1,5 +1,13 @@
 import React from "react";
-import { FlatList, View, Text, StyleSheet, Button } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  RefreshControl,
+  ScrollView,
+} from "react-native";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TripCard from "./TripCard";
 import { getAllTrips } from "../../apis/trips/index";
@@ -15,7 +23,7 @@ const TripList = () => {
     queryFn: () => getAllTrips(),
   });
 
-  // if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) return <Text>Loading...</Text>;
 
   return (
     <>
@@ -23,6 +31,9 @@ const TripList = () => {
         data={trips}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => <TripCard trip={item} />}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
       />
     </>
   );

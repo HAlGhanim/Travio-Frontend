@@ -6,8 +6,9 @@ const ROUTES = {
     PROFILE: "Account",
     PROFILENAV: "My Profile",
     TRIPDETAILS: "trip detail",
-    UPDATETRIP: "trip Edit",
-    UPDATEPROFILE: "Edit Profile",
+    UPDATETRIP: "tripEdit",
+    OHERPROFILES: "Profile",
+    UPDATEPROFILE: "Update Profile",
   },
   AUTHROUTES: {
     SIGNIN: "signIn",

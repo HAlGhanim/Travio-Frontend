@@ -8,16 +8,26 @@ const TripCard = ({ trip = {} }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate(ROUTES.HEDERROUTES.TRIPDETAILS, { _id: trip._id });
-      }}
-    >
-      <View style={styles.cardContainer}>
+    <View style={[styles.cardContainer]}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(ROUTES.HEDERROUTES.OHERPROFILES, {
+            _id: trip.createdBy,
+          });
+        }}
+      >
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
         </Text>
-
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(ROUTES.HEDERROUTES.TRIPDETAILS, {
+            _id: trip._id,
+          });
+        }}
+      >
+        {/* <Text>Location: {trip.location}</Text> */}
         <View style={styles.card}>
           <Image
             source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
@@ -25,8 +35,8 @@ const TripCard = ({ trip = {} }) => {
           />
           <Text style={styles.title}>{trip.title}</Text>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 
