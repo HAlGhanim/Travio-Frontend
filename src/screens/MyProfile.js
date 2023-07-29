@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
@@ -12,16 +12,16 @@ const MyProfile = ({ user }) => {
   };
   return (
     <>
-      <View style={{ backgroundColor: "gray", flex: 1 }}>
+      <SafeAreaView style={{ backgroundColor: "gray", flex: 1 }}>
         <Text>Profile</Text>
-        {/* <Text style={styles.name}>{user.username}</Text> */}
+
         <Button
           title="Logout"
           onPress={() => {
             handleLogout();
           }}
         />
-      </View>
+      </SafeAreaView>
     </>
   );
 };

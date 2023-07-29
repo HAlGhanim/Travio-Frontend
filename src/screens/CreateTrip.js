@@ -6,18 +6,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
-import UserContext from "../context/UserContext";
+import MapView, { Marker } from "react-native-maps";
 
 const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
-  console.log("Create trip");
+
   queryClient.invalidateQueries({
     predicate: (query) => {
-      console.log("[KEYS - create trip]: ", query.queryKey[0]);
+      // console.log("[KEYS - create trip]: ", query.queryKey[0]);
     },
   });
+
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+  // const [location, setLocation] = useState(null);
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () => createTrip(data),
@@ -34,9 +36,30 @@ const CreateTrip = ({ navigation }) => {
     createTripFun();
   };
 
+  // const onMapPress = (event) => {
+  //   setLocation({
+  //     latitude: event.nativeEvent.coordinate.latitude,
+  //     longitude: event.nativeEvent.coordinate.longitude,
+  //   });
+  //   setData({ ...data, location: event.nativeEvent.coordinate });
+  // };
+
   return (
     <>
       <View style={styles.container}>
+        {/* <MapView
+          style={{ width: "100%", height: 200 }}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          onPress={onMapPress}
+        >
+          {location && <Marker coordinate={location} />}
+        </MapView> */}
+
         <ImagePickerC
           image={image}
           setImage={setImage}
@@ -70,6 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     backgroundColor: "#fff",
+    alignItems: "center",
   },
   buttonContainer: {
     marginTop: 20,
@@ -78,11 +102,15 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: "100%",
-    height: 200,
+    width: 360,
+    height: 300,
     borderRadius: 7,
     marginBottom: 20,
     borderColor: "#D3D3D3",
     borderWidth: 1,
+    marginTop: 12,
+
+    // marginLeft: 12,
+    // marginRight: 12,
   },
 });

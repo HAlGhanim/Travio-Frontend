@@ -9,7 +9,7 @@ import TripDetails from "../screens/TripDetails";
 const Stack = createStackNavigator();
 export default function ExploreNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={ROUTES.HEDERROUTES.EXPLORE} component={Explore} />
       <Stack.Screen
         name={ROUTES.HEDERROUTES.TRIPDETAILS}

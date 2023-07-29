@@ -20,6 +20,7 @@ function BottomBar2() {
       screenOptions={{
         activeTintColor: "#002147",
         inactiveTintColor: "black",
+        headerShown: false,
       }}
     >
       <Tab.Screen

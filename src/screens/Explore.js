@@ -16,8 +16,6 @@ const Explore = () => {
     }, [])
   );
 
-  console.log("explore");
-
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Explore the world with us!</Text>
