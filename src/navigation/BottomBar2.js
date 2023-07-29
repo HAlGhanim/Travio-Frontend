@@ -9,6 +9,7 @@ import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import AuthNavigator from "./AuthNavigator";
 import ExploreNavigation from "./ExploreNavigation";
+import { Text, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ function BottomBar2() {
       screenOptions={{
         activeTintColor: "#002147",
         inactiveTintColor: "black",
-        headerShown: false,
+        headerShown: user ? true : false,
       }}
     >
       <Tab.Screen

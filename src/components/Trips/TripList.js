@@ -15,6 +15,8 @@ const TripList = () => {
     queryFn: () => getAllTrips(),
   });
 
+  // console.log("Trips list");
+  // console.log(trips);
   // clientQuery.invalidateQueries({
   //   predicate: (query) => {
   //     console.log("[KEYS - from trip list]:", query.queryKey[0]);

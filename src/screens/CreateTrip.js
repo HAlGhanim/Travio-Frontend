@@ -28,7 +28,11 @@ const CreateTrip = ({ navigation }) => {
       setData({});
       setImage(null);
       queryClient.invalidateQueries(["trips"]);
+      queryClient.invalidateQueries(["profile"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 

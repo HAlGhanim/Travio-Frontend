@@ -19,6 +19,7 @@ export default function App() {
     if (token) {
       const userObj = jwt_decode(token);
       setUser(userObj);
+      console.log(user);
     }
     // setAppIsReady(true);
     setTimeout(() => setAppIsReady(true), 3000); // delay of 2 seconds
