@@ -4,7 +4,7 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../../navigation";
 
-const TripCard = ({ trip }) => {
+const TripCard = ({ trip = {} }) => {
   const navigation = useNavigation();
 
   return (
@@ -17,6 +17,7 @@ const TripCard = ({ trip }) => {
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
         </Text>
+        {/* <Text>Location: {trip.location}</Text> */}
         <View style={styles.card}>
           <Image
             source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+
   title: {
     fontSize: 20,
     fontWeight: "bold",

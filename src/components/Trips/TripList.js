@@ -15,19 +15,18 @@ const TripList = () => {
     queryFn: () => getAllTrips(),
   });
 
-  console.log("Trips list");
-  console.log(trips);
-  clientQuery.invalidateQueries({
-    predicate: (query) => {
-      console.log("[KEYS - from trip list]:", query.queryKey[0]);
-    },
-  });
+  // console.log("Trips list");
+  // console.log(trips);
+  // clientQuery.invalidateQueries({
+  //   predicate: (query) => {
+  //     console.log("[KEYS - from trip list]:", query.queryKey[0]);
+  //   },
+  // });
 
-  if (isLoading) return <Text>Loading...</Text>;
+  // if (isLoading) return <Text>Loading...</Text>;
 
   return (
     <>
-      {/* <Button title="REFROMTRIPS" onPress={() => refetch()} /> */}
       <FlatList
         data={trips}
         keyExtractor={(item) => item._id}

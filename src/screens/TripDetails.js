@@ -1,6 +1,9 @@
 import {
   Alert,
+  Dimensions,
   Image,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,11 +11,12 @@ import {
 } from "react-native";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteTrip, getTripById } from "../apis/trips/index"; 
+import { deleteTrip, getTripById } from "../apis/trips/index";
 import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
 import UserContext from "../context/UserContext";
+const { height } = Dimensions.get("window");
 
 const TripDetails = ({ navigation, route }) => {
   const [showBox, setShowBox] = useState(true);
@@ -51,7 +55,7 @@ const TripDetails = ({ navigation, route }) => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
-      alert("Trip deleted successfully!");
+      Alert.alert("Trip deleted successfully!");
     },
   });
   const handleDelete = () => {
@@ -62,52 +66,54 @@ const TripDetails = ({ navigation, route }) => {
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
 
   return (
-    <View>
-      <View style={styles.cardContainer}>
+    <ScrollView>
+      <SafeAreaView>
         <Text style={styles.name}>
           {trip.createdBy ? trip.createdBy.username : "Default User"}
         </Text>
-        <View style={styles.card}>
-          <Image
-            source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
-            style={styles.image}
-          />
-          <Text style={styles.title}>{trip.title}</Text>
-          <Text style={styles.description}>{trip.description}</Text>
+        <View style={styles.cardContainer}>
+          <View style={styles.card}>
+            <Image
+              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+              style={styles.image}
+            />
+            <Text style={styles.title}>{trip.title}</Text>
+            <Text style={styles.description}>{trip.description}</Text>
 
-          <View style={styles.buttonsContainer}>
-            {trip?.createdBy._id === user._id && (
-              <>
-                <TouchableOpacity
-                  style={styles.editButton}
-                  onPress={() =>
-                    navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, {
-                      _id: trip._id,
-                    })
-                  }
-                >
-                  <View style={styles.buttonContent}>
-                    <Ionicons name="create-outline" size={18} color="black" />
-                    <Text style={styles.buttonText}>Edit</Text>
-                  </View>
-                </TouchableOpacity>
+            <View style={styles.buttonsContainer}>
+              {trip?.createdBy._id === user._id && (
+                <>
+                  <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={() =>
+                      navigation.navigate(ROUTES.HEDERROUTES.UPDATETRIP, {
+                        _id: trip._id,
+                      })
+                    }
+                  >
+                    <View style={styles.buttonContent}>
+                      <Ionicons name="create-outline" size={18} color="black" />
+                      <Text style={styles.buttonText}>Edit</Text>
+                    </View>
+                  </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={handleDelete}
-                >
-                  <View style={styles.buttonContent}>
-                    {showBox}
-                    <Ionicons name="trash-outline" size={18} color="black" />
-                    <Text style={styles.buttonText}>Delete</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={handleDelete}
+                  >
+                    <View style={styles.buttonContent}>
+                      {showBox}
+                      <Ionicons name="trash-outline" size={18} color="black" />
+                      <Text style={styles.buttonText}>Delete</Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
           </View>
         </View>
-      </View>
-    </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   cardContainer: {
-    margin: 20,
+    // margin: 20,
     padding: 10,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -129,28 +135,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    minHeight: height,
   },
   image: {
     width: "100%",
     height: 250,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginBottom: 7,
+    marginBottom: 15,
   },
   name: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 3,
+    marginLeft: 21,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#333",
     marginBottom: 10,
+    textAlign: "justify",
   },
   buttonsContainer: {
     flexDirection: "row",
