@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   button: {
-    backgroundColor: "#3498db",
+    backgroundColor: "darkblue",
     paddingVertical: 12,
     borderRadius: 30,
     width: 120,
