@@ -29,6 +29,7 @@ const TripList = () => {
     <>
       <FlatList
         data={trips}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => <TripCard trip={item} />}
         refreshControl={

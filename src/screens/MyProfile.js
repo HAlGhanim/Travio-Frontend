@@ -43,19 +43,15 @@ const MyProfile = ({ navigation, route }) => {
         />
         <View style={styles.info}>
           <Text style={styles.username}>@{profileFun?.username}</Text>
-          <Button
-            title="Edit Profile"
-            onPress={updateProfile}
-            color="darkblue"
-          />
+          <Text style={styles.bio}>{profileFun?.bio}</Text>
+          <Button title="Edit Profile" onPress={updateProfile} color="gray" />
         </View>
       </View>
 
-      <Text style={styles.bio}>{profileFun?.bio}</Text>
       <SafeAreaView style={styles.view}>
         <UserTrips
-          trips={profileFun?.trips}
-          isLaoding={isLoading}
+          trips={profileFun?.trips ? [...profileFun?.trips].reverse() : null}
+          isLoading={isLoading}
           refetch={refetch}
         />
       </SafeAreaView>
@@ -66,38 +62,42 @@ const MyProfile = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#000",
+    backgroundColor: "#f5f5f5",
   },
   view: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f5f5f5",
   },
   header: {
     marginTop: 50,
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 100, // Increased size
+    height: 100, // Increased size
+    borderRadius: 50, // Rounded corners
+    borderColor: "darkblue", // Border color
+    borderWidth: 2, // Border width
   },
   info: {
     marginLeft: 20,
   },
   username: {
-    fontSize: 20,
+    fontSize: 24, // Increased font size
     fontWeight: "bold",
-    color: "#999",
+    color: "#333", // Darker color
+    marginBottom: 5, // Spacing below
   },
   bio: {
     padding: 20,
     fontSize: 16,
-    color: "#333",
+    color: "black",
+    fontStyle: "italic", // Italic style
   },
 });
 
