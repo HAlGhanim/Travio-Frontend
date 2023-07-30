@@ -6,7 +6,7 @@ import ROUTES from "../../navigation";
 
 const TripCard = ({ trip = {} }) => {
   const navigation = useNavigation();
-
+  console.log(trip?.createdBy);
   return (
     <View style={[styles.cardContainer]}>
       <TouchableOpacity

@@ -73,26 +73,26 @@ const TripDetails = ({ navigation, route }) => {
   console.log(location);
   if (isLoading) return <Text>Loading...</Text>;
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
-  console.log(trip)
+  console.log(trip);
   return (
     <ScrollView>
       <SafeAreaView>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.replace(ROUTES.HEDERROUTES.OHERPROFILES, {
-              _id: trip.createdBy,
-            });
-          }}
-        >
-          {/* <Text style={styles.name}>
+        {/* <Text style={styles.name}>
             {trip.createdBy ? trip.createdBy.username : "Default User"}
           </Text> */}
-        </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <Text style={styles.name}>
-              {trip.createdBy ? trip.createdBy.username : "Default User"}
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.replace(ROUTES.HEDERROUTES.OHERPROFILES, {
+                  _id: trip.createdBy,
+                });
+              }}
+            >
+              <Text style={styles.name}>
+                {trip.createdBy ? trip.createdBy.username : "Default User"}
+              </Text>
+            </TouchableOpacity>
             <View
               style={{
                 flexDirection: "row",
