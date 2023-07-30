@@ -73,7 +73,7 @@ const EditProfile = ({ navigation, route }) => {
         <Button
           title="Update Profile"
           onPress={handleUpdateProfile}
-          color="darkblue"
+          color="gray"
         />
       </View>
     </View>

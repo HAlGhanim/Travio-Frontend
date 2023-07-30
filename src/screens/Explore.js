@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useCallback } from "react";
 import TripList from "../components/Trips/TripList";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,13 +10,13 @@ const Explore = () => {
   useFocusEffect(
     useCallback(() => {
       queryClient.invalidateQueries(["trips"]);
-      return () => {};
+      return () => { };
     }, [])
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Explore the world with us!</Text>
+      <Text style={styles.title}>Explore The Beauty Of The World With Us!</Text>
 
       <TripList />
     </SafeAreaView>
@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
 
     textAlign: "center",
     marginBottom: 20,

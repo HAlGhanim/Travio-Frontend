@@ -34,6 +34,7 @@ const profile = async (id) => {
   console.log("herree", id);
   return res.data;
 };
+
 const updateProfile = async (id, userInfo) => {
   const formData = new FormData();
   for (const key in userInfo) {
