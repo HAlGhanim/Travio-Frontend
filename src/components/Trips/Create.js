@@ -1,6 +1,14 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-const Create = ({ data, setData }) => {
+const Create = ({ data, setData, setErrorText }) => {
+  const handleTitleFocus = () => {
+    setErrorText("");
+  };
+
+  const handleDescriptionFocus = () => {
+    setErrorText("");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>What's the Title of Your Trip?</Text>
@@ -10,6 +18,7 @@ const Create = ({ data, setData }) => {
         placeholderTextColor="#A9A9A9"
         value={data.title}
         onChangeText={(value) => setData({ ...data, title: value })}
+        onFocus={handleTitleFocus}
       />
       <Text style={styles.label}>Tell Us More About Your Trip</Text>
       <TextInput
@@ -19,6 +28,7 @@ const Create = ({ data, setData }) => {
         value={data.description}
         onChangeText={(value) => setData({ ...data, description: value })}
         multiline
+        onFocus={handleDescriptionFocus}
       />
     </View>
   );

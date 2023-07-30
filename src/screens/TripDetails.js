@@ -76,7 +76,18 @@ const TripDetails = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.replace(ROUTES.HEDERROUTES.OHERPROFILES, {
+              _id: trip.createdBy,
+            });
+          }}
+        >
+          <Text style={styles.name}>
+            {trip.createdBy ? trip.createdBy.username : "Default User"}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
             <Text style={styles.name}>

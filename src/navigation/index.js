@@ -3,10 +3,14 @@ const ROUTES = {
     EXPLORE_NAVIGATION: "Explore",
     EXPLORE: "explore",
     CREATE: "Create New Trip",
-    PROFILE: "My Profile",
+
     TRIPDETAILS: "trip detail",
     UPDATETRIP: "Trip Edit",
     MAP: "MAP",
+    PROFILE: "Account",
+    PROFILENAV: "My Profile",
+    OHERPROFILES: "Profile",
+    UPDATEPROFILE: "Update Profile",
   },
   AUTHROUTES: {
     SIGNIN: "signIn",

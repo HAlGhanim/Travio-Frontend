@@ -28,6 +28,7 @@ const CreateTrip = ({ navigation, route }) => {
     queryFn: () => getLocationAddress(location?.longitude, location?.latitude),
     enabled: !!location,
   });
+  const [errorText, setErrorText] = useState("");
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () =>
@@ -46,7 +47,38 @@ const CreateTrip = ({ navigation, route }) => {
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
     },
     onError: (error) => {
-      console.log(error);
+      if (error.response?.data?.error?.message.includes("title")) {
+        setErrorText("Title is required");
+      }
+      if (error.response?.data?.error?.message.includes("description")) {
+        setErrorText("Description is required");
+      }
+      if (error.response?.data?.error?.message.includes("tripImage")) {
+        setErrorText("Image is required");
+      }
+      if (
+        error.response?.data?.error?.message.includes("title" && "description")
+      ) {
+        setErrorText("Title and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required."
+      ) {
+        setErrorText("Image and description are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Image and title are required");
+      }
+      if (
+        error.response?.data?.error?.message ===
+        "Trip validation failed: description: Path `description` is required., tripImage: Path `tripImage` is required., title: Path `title` is required."
+      ) {
+        setErrorText("Title, description, and image are required");
+      }
     },
   });
   useEffect(() => {
@@ -108,7 +140,8 @@ const CreateTrip = ({ navigation, route }) => {
               </View>
             </ImagePickerC>
 
-            <Create data={data} setData={setData} />
+            <Create data={data} setData={setData} setErrorText={setErrorText} />
+            {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
             <View>
               <TouchableOpacity
                 style={styles.buttonContainer}
@@ -127,6 +160,10 @@ const CreateTrip = ({ navigation, route }) => {
 export default CreateTrip;
 
 const styles = StyleSheet.create({
+  error: {
+    color: "red",
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
     padding: 20,

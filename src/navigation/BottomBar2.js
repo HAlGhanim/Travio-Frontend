@@ -9,11 +9,14 @@ import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import AuthNavigator from "./AuthNavigator";
 import ExploreNavigation from "./ExploreNavigation";
+import { Text, TouchableOpacity, View } from "react-native";
+import ProfileNavigation from "./ProfileNavigator";
+import { removeToken } from "../apis/auth/storage";
 
 const Tab = createBottomTabNavigator();
 
 function BottomBar2() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <Tab.Navigator
@@ -51,10 +54,22 @@ function BottomBar2() {
       />
 
       <Tab.Screen
-        name={ROUTES.HEDERROUTES.PROFILE}
-        component={user ? MyProfile : AuthNavigator}
+        name={ROUTES.HEDERROUTES.PROFILENAV}
+        component={user ? ProfileNavigation : AuthNavigator}
         options={{
-          headerShown: false,
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                style={{ marginLeft: 15 }}
+                onPress={() => {
+                  setUser(false);
+                  removeToken();
+                }}
+              >
+                <MaterialCommunityIcons name="logout" size={24} color="black" />
+              </TouchableOpacity>
+            );
+          },
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons
               name="account-circle-outline"

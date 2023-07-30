@@ -7,6 +7,8 @@ import Explore from "../screens/Explore";
 import TripDetails from "../screens/TripDetails";
 import Map from "../screens/Map";
 import SelectLocationMap from "../screens/SelectLocationMap";
+import MyProfile from "../screens/MyProfile";
+import OtherProfiles from "../screens/OtherProfiles";
 
 const Stack = createStackNavigator();
 export default function ExploreNavigation() {
@@ -27,6 +29,9 @@ export default function ExploreNavigation() {
         options={{ tabBarVisible: false }}
       />
       <Stack.Screen name="SelectLocationMap" component={SelectLocationMap} />
+      name={ROUTES.HEDERROUTES.OHERPROFILES}
+      component={OtherProfiles}
+      />
     </Stack.Navigator>
   );
 }
