@@ -6,13 +6,14 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import { profile } from "../apis/auth";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BASE_URL } from "../apis";
 import UserTrips from "../components/Trips/UserTrips";
 import ROUTES from "../navigation";
+import { useFocusEffect } from "@react-navigation/native";
 const MyProfile = ({ navigation, route }) => {
   const { user, setUser } = useContext(UserContext);
 
@@ -26,8 +27,19 @@ const MyProfile = ({ navigation, route }) => {
     queryFn: () => profile(user._id),
   });
 
+  const queryClient = useQueryClient();
+
+  useFocusEffect(
+    useCallback(() => {
+      queryClient.invalidateQueries(["profile"]);
+      return () => {};
+    }, [])
+  );
+
   const updateProfile = () => {
-    navigation.navigate(ROUTES.HEDERROUTES.UPDATEPROFILE);
+    navigation.navigate(ROUTES.HEDERROUTES.UPDATEPROFILE, {
+      user: profileFun
+    });
   };
 
   return (
