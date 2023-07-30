@@ -93,6 +93,10 @@ const TripDetails = ({ navigation, route }) => {
                 {trip.createdBy ? trip.createdBy.username : "Default User"}
               </Text>
             </TouchableOpacity>
+            <Image
+              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+              style={styles.image}
+            />
             <View
               style={{
                 flexDirection: "row",
