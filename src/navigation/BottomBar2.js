@@ -43,6 +43,7 @@ function BottomBar2() {
         name={ROUTES.HEDERROUTES.CREATE}
         component={user ? CreateTrip : AuthNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Octicons name="diff-added" size={size} color={color} />
           ),
@@ -53,6 +54,7 @@ function BottomBar2() {
         name={ROUTES.HEDERROUTES.PROFILE}
         component={user ? MyProfile : AuthNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons
               name="account-circle-outline"

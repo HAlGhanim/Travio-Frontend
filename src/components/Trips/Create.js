@@ -1,8 +1,9 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 const Create = ({ data, setData }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>What's the Title of Your Trip?</Text>
       <TextInput
         style={styles.input}
         placeholder="Title"
@@ -10,7 +11,7 @@ const Create = ({ data, setData }) => {
         value={data.title}
         onChangeText={(value) => setData({ ...data, title: value })}
       />
-
+      <Text style={styles.label}>Tell Us More About Your Trip</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Description"
@@ -28,6 +29,11 @@ export default Create;
 const styles = StyleSheet.create({
   container: {
     padding: 15,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
   input: {
     height: 45,

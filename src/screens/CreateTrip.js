@@ -1,21 +1,33 @@
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import ImagePickerC from "../components/Shared/ImagePickerC";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createTrip } from "../apis/trips/index";
 import Create from "../components/Trips/Create";
 import ROUTES from "../navigation";
-import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
+import { getLocationAddress } from "../apis/location";
 
-const CreateTrip = ({ navigation }) => {
+const CreateTrip = ({ navigation, route }) => {
   const queryClient = useQueryClient();
 
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+  const [location, setLocation] = useState(route.params?.location || null);
 
-  const [location, setLocation] = useState(null);
+  const { data: locationDetails } = useQuery({
+    queryKey: ["location", location?.latitude, location?.longitude],
+    queryFn: () => getLocationAddress(location?.longitude, location?.latitude),
+    enabled: !!location,
+  });
 
   const { mutate: createTripFun } = useMutation({
     mutationFn: () =>
@@ -28,6 +40,7 @@ const CreateTrip = ({ navigation }) => {
       // Invalidate and refetch
       setData({});
       setImage(null);
+      setLocation(null);
       queryClient.invalidateQueries(["trips"]);
       queryClient.invalidateQueries(["profile"]);
       navigation.navigate(ROUTES.HEDERROUTES.EXPLORE);
@@ -36,65 +49,77 @@ const CreateTrip = ({ navigation }) => {
       console.log(error);
     },
   });
+  useEffect(() => {
+    if (route.params?.location) {
+      setLocation(route.params.location);
+    }
+  }, [route.params?.location]);
 
+  const handleSelectLocation = () => {
+    navigation.navigate("SelectLocationMap"); // Navigate to Map screen
+  };
   const handleSubmit = () => {
     createTripFun();
   };
 
-  const onMapPress = (event) => {
-    setLocation({
-      latitude: event.nativeEvent.coordinate.latitude,
-      longitude: event.nativeEvent.coordinate.longitude,
-    });
-    setData({ ...data, location: event.nativeEvent.coordinate });
-  };
-  console.log(location);
-
   return (
     <>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.mapContainer}>
-            <MapView
-              style={{ width: "100%", height: 200 }}
-              initialRegion={{
-                latitude: 29.3759,
-                longitude: 47.9774,
-                latitudeDelta: 0.5,
-                longitudeDelta: 0.5,
-              }}
-              onPress={onMapPress}
-            >
-              {location && <Marker coordinate={location} />}
-            </MapView>
-          </View>
-
-          <ImagePickerC
-            image={image}
-            setImage={setImage}
-            style={styles.image}
-            onImagePicked={(imageUri) =>
-              setData({ ...data, tripImage: imageUri })
-            }
-          >
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ color: "grey" }}>Tap to select a trip image</Text>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.label}>Set Your Trip Location</Text>
+            <View style={styles.locationContainer}>
+              <TouchableOpacity onPress={handleSelectLocation}>
+                {location ? (
+                  <>
+                    <Text style={styles.locationText}>
+                      Country: {locationDetails?.countryName}
+                    </Text>
+                    <Text style={styles.locationText}>
+                      City: {locationDetails?.city}
+                    </Text>
+                  </>
+                ) : (
+                  <Text style={styles.selectLocation}>Select Location</Text>
+                )}
+              </TouchableOpacity>
             </View>
-          </ImagePickerC>
+            <Text style={styles.label}>
+              Choose an Image to Represent Your Trip
+            </Text>
+            <ImagePickerC
+              image={image}
+              setImage={setImage}
+              style={styles.image}
+              onImagePicked={(imageUri) =>
+                setData({ ...data, tripImage: imageUri })
+              }
+            >
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: "grey" }}>
+                  Tap to select a trip image
+                </Text>
+              </View>
+            </ImagePickerC>
 
-          <Create data={data} setData={setData} />
-
-          <View style={styles.buttonContainer}>
-            <Button title="Create Trip" onPress={handleSubmit} color="black" />
+            <Create data={data} setData={setData} />
+            <View>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={handleSubmit}
+              >
+                <Text style={styles.buttonText}>Create Trip</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </>
   );
 };
@@ -109,16 +134,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonContainer: {
+    backgroundColor: "darkblue",
+    padding: 10,
+    alignSelf: "center",
+    borderRadius: 5,
+    alignItems: "center",
+    width: 200,
     marginTop: 20,
-    borderRadius: 7,
-    overflow: "hidden",
   },
   image: {
     width: 360,
-    height: 300,
+    height: 250,
     borderRadius: 15,
     marginBottom: 20,
-    marginTop: 20,
+
     resizeMode: "cover",
     borderRadius: 7,
     borderColor: "#D3D3D3",
@@ -130,5 +159,36 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: "hidden",
     marginBottom: 20,
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+  },
+  selectLocation: { color: "gray" },
+
+  locationContainer: {
+    borderColor: "#D3D3D3",
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    backgroundColor: "#F8F8F8",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    width: 360,
+    height: 55,
+  },
+
+  locationText: {
+    fontSize: 16,
+    color: "black",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    marginTop: 12,
+    alignSelf: "flex-start",
+    marginLeft: 20,
   },
 });

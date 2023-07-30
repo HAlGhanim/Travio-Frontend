@@ -51,9 +51,6 @@ function BottomNavigator() {
               color="black"
             />
           ),
-          // headerRight: () => (
-          //   <Text style={{ fontSize: 20, color: "black" }}>here</Text>
-          // ),
         }}
       />
     </Tab.Navigator>

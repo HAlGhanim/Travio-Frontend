@@ -5,6 +5,8 @@ import ROUTES from ".";
 import UpdateTrip from "../screens/UpdateTrip";
 import Explore from "../screens/Explore";
 import TripDetails from "../screens/TripDetails";
+import Map from "../screens/Map";
+import SelectLocationMap from "../screens/SelectLocationMap";
 
 const Stack = createStackNavigator();
 export default function ExploreNavigation() {
@@ -19,6 +21,12 @@ export default function ExploreNavigation() {
         name={ROUTES.HEDERROUTES.UPDATETRIP}
         component={UpdateTrip}
       />
+      <Stack.Screen
+        name={ROUTES.HEDERROUTES.MAP}
+        component={Map}
+        options={{ tabBarVisible: false }}
+      />
+      <Stack.Screen name="SelectLocationMap" component={SelectLocationMap} />
     </Stack.Navigator>
   );
 }
