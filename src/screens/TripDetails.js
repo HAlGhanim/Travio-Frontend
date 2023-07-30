@@ -73,7 +73,7 @@ const TripDetails = ({ navigation, route }) => {
   console.log(location);
   if (isLoading) return <Text>Loading...</Text>;
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
-
+  console.log(trip)
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView>
@@ -128,7 +128,7 @@ const TripDetails = ({ navigation, route }) => {
             <Text style={styles.description}>{trip.description}</Text>
 
             <View style={styles.buttonsContainer}>
-              {trip?.createdBy._id === user._id && (
+              {trip?.createdBy?._id === user?._id && (
                 <>
                   <TouchableOpacity
                     style={styles.editButton}
