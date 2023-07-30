@@ -42,7 +42,14 @@ const createTrip = async (data) => {
 };
 
 const updateTrip = async (id, data) => {
-  console.log("first2");
+
+  for (const key in data) {
+    if (key !== "tripImage")
+      if (data[key] == undefined || data[key] == "") {
+        return new Error({ message: "Trip data can not be empty!" })
+      }
+  }
+
   const formData = new FormData();
 
   for (const key in data) {
