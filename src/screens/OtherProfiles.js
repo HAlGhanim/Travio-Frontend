@@ -40,8 +40,8 @@ const OtherProfiles = ({ navigation, route }) => {
 
       <SafeAreaView style={styles.view}>
         <UserTrips
-          trips={profileFun?.trips}
-          isLaoding={isLoading}
+          trips={profileFun?.trips ? [...profileFun?.trips].reverse() : null}
+          isLoading={isLoading}
           refetch={refetch}
         />
       </SafeAreaView>

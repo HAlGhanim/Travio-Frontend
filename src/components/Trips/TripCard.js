@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { BASE_URL } from "../../apis";
-import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../../navigation";
 
@@ -8,7 +7,7 @@ const TripCard = ({ trip = {} }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.cardContainer]}>
+    <View style={styles.cardContainer}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate(ROUTES.HEDERROUTES.OHERPROFILES, {
@@ -44,6 +43,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 26,
+    height: 400,
+    margin: 20,
   },
   card: {
     backgroundColor: "#fff",
@@ -56,10 +57,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 225,
+    height: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-
+    position: "relative",
   },
   name: {
     fontSize: 16,
@@ -70,14 +71,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
     padding: 10,
-  },
-  description: {
-    fontSize: 16,
-    color: "gray",
-    marginBottom: 10,
-    padding: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.7)", // optional, you can set the background of the title to be slightly transparent
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    textAlign: "center",
   },
 });
 
