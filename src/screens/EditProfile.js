@@ -7,10 +7,9 @@ import { BASE_URL } from "../apis";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfileNavigations from "../navigation/ProfileNavigator";
 
-const EditProfile = ({ navigation }) => {
-  const { user, setUser } = useContext(UserContext);
+const EditProfile = ({ navigation, route }) => {
   const queryClient = useQueryClient();
-
+  const { user } = route.params;
   const [profileData, setProfileData] = useState({
     username: user?.username || "",
     bio: user?.bio || "",
@@ -23,8 +22,8 @@ const EditProfile = ({ navigation }) => {
     },
     onSuccess: (data) => {
       // Update the user context with the updated data
-      setUser({ ...user, ...data });
       // Invalidate and refetch the user profile data
+
       queryClient.invalidateQueries(["profile"]);
       navigation.goBack(); // Navigate back to the MyProfile screen
     },
