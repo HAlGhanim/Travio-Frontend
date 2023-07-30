@@ -9,7 +9,7 @@ import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import AuthNavigator from "./AuthNavigator";
 import ExploreNavigation from "./ExploreNavigation";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import ProfileNavigation from "./ProfileNavigator";
 import { removeToken } from "../apis/auth/storage";
 
@@ -46,6 +46,7 @@ function BottomBar2() {
         name={ROUTES.HEDERROUTES.CREATE}
         component={user ? CreateTrip : AuthNavigator}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Octicons name="diff-added" size={size} color={color} />
           ),

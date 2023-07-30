@@ -1,12 +1,14 @@
 const ROUTES = {
   HEDERROUTES: {
-    EXPLORE_NAVIGATION: "exploreNavigation",
+    EXPLORE_NAVIGATION: "Explore-N",
     EXPLORE: "explore",
-    CREATE: "create",
+    CREATE: "Create New Trip",
+
+    TRIPDETAILS: "trip detail",
+    UPDATETRIP: "Trip Edit",
+    MAP: "MAP",
     PROFILE: "Account",
     PROFILENAV: "My Profile",
-    TRIPDETAILS: "trip detail",
-    UPDATETRIP: "tripEdit",
     OHERPROFILES: "Profile",
     UPDATEPROFILE: "Update Profile",
   },

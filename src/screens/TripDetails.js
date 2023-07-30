@@ -17,7 +17,9 @@ import ROUTES from "../navigation";
 import { Ionicons } from "@expo/vector-icons";
 import UserContext from "../context/UserContext";
 import { getLocationAddress } from "../apis/location";
+import { Entypo } from "@expo/vector-icons";
 const { height } = Dimensions.get("window");
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const TripDetails = ({ navigation, route }) => {
   const [showBox, setShowBox] = useState(true);
@@ -82,31 +84,47 @@ const TripDetails = ({ navigation, route }) => {
             });
           }}
         >
-          <Text style={styles.name}>
+          {/* <Text style={styles.name}>
             {trip.createdBy ? trip.createdBy.username : "Default User"}
-          </Text>
+          </Text> */}
         </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <Image
-              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
-              style={styles.image}
-            />
-            <Text style={styles.title}>{trip.title} </Text>
+            <Text style={styles.name}>
+              {trip.createdBy ? trip.createdBy.username : "Default User"}
+            </Text>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 15,
                 marginBottom: 10,
+                marginLeft: 10,
               }}
             >
-              <Text style={styles.title}>Location:</Text>
-              <Text>
-                {location === "No location provided" && location}
-                {location?.countryName} {location?.city}
-              </Text>
+              {/* <Text style={styles.title}>Location:</Text> */}
+              <Entypo name="location-pin" size={24} color="black" />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(ROUTES.HEDERROUTES.MAP, {
+                    latitude: trip.latitude,
+                    longitude: trip.longitude,
+                    title: trip.title,
+                  })
+                }
+              >
+                <Text>
+                  {location === "No location provided" && location}
+                  {location?.countryName} {location?.city}
+                </Text>
+              </TouchableOpacity>
             </View>
+            <Image
+              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+              style={styles.image}
+            />
+            <Text style={styles.title}>{trip.title} </Text>
+
             <Text style={styles.description}>{trip.description}</Text>
 
             <View style={styles.buttonsContainer}>
@@ -132,7 +150,12 @@ const TripDetails = ({ navigation, route }) => {
                   >
                     <View style={styles.buttonContent}>
                       {showBox}
-                      <Ionicons name="trash-outline" size={18} color="black" />
+
+                      <MaterialCommunityIcons
+                        name="delete-outline"
+                        size={18}
+                        color="black"
+                      />
                       <Text style={styles.buttonText}>Delete</Text>
                     </View>
                   </TouchableOpacity>
@@ -176,18 +199,19 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 3,
+    marginBottom: 5,
     marginLeft: 21,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    // marginBottom: 10,
+    marginBottom: 10,
   },
   description: {
     fontSize: 18,
     color: "#333",
-    marginBottom: 10,
+    marginBottom: 15,
+    marginTop: 15,
     textAlign: "justify",
   },
   buttonsContainer: {
@@ -239,4 +263,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
   },
+  safeArea: { backgroundColor: "white" },
 });
