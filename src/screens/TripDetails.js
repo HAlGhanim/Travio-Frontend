@@ -75,7 +75,7 @@ const TripDetails = ({ navigation, route }) => {
   if (isError || !trip) return <Text>Error fetching trip details.</Text>;
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView>
         <TouchableOpacity
           onPress={() => {
@@ -93,16 +93,21 @@ const TripDetails = ({ navigation, route }) => {
             <Text style={styles.name}>
               {trip.createdBy ? trip.createdBy.username : "Default User"}
             </Text>
+
+            <Image
+              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
+              style={styles.image}
+            />
+            <Text style={styles.title}>{trip.title} </Text>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 15,
-                marginBottom: 10,
+                marginBottom: 1,
                 marginLeft: 10,
               }}
             >
-              {/* <Text style={styles.title}>Location:</Text> */}
               <Entypo name="location-pin" size={24} color="black" />
               <TouchableOpacity
                 onPress={() =>
@@ -119,11 +124,6 @@ const TripDetails = ({ navigation, route }) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <Image
-              source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
-              style={styles.image}
-            />
-            <Text style={styles.title}>{trip.title} </Text>
 
             <Text style={styles.description}>{trip.description}</Text>
 
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#333",
     marginBottom: 15,
-    marginTop: 15,
+    marginTop: 11,
     textAlign: "justify",
   },
   buttonsContainer: {

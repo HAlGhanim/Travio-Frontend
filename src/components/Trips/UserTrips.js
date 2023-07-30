@@ -11,6 +11,7 @@ const UserTrips = ({ trips, isLoading, refetch }) => {
       <FlatList
         data={trips}
         keyExtractor={(item) => item._id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <TripCard trip={item} />}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
