@@ -1,6 +1,6 @@
 const ROUTES = {
   HEDERROUTES: {
-    EXPLORE_NAVIGATION: "Explore",
+    EXPLORE_NAVIGATION: "Explore-N",
     EXPLORE: "explore",
     CREATE: "Create New Trip",
 

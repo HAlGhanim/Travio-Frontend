@@ -29,8 +29,9 @@ export default function ExploreNavigation() {
         options={{ tabBarVisible: false }}
       />
       <Stack.Screen name="SelectLocationMap" component={SelectLocationMap} />
-      name={ROUTES.HEDERROUTES.OHERPROFILES}
-      component={OtherProfiles}
+      <Stack.Screen
+        name={ROUTES.HEDERROUTES.OHERPROFILES}
+        component={OtherProfiles}
       />
     </Stack.Navigator>
   );

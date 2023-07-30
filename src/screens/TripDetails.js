@@ -84,9 +84,9 @@ const TripDetails = ({ navigation, route }) => {
             });
           }}
         >
-          <Text style={styles.name}>
+          {/* <Text style={styles.name}>
             {trip.createdBy ? trip.createdBy.username : "Default User"}
-          </Text>
+          </Text> */}
         </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.card}>

@@ -27,7 +27,6 @@ const TripCard = ({ trip = {} }) => {
           });
         }}
       >
-        {/* <Text>Location: {trip.location}</Text> */}
         <View style={styles.card}>
           <Image
             source={{ uri: `${BASE_URL}/${trip.tripImage}` }}
