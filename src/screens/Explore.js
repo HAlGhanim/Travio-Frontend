@@ -10,7 +10,7 @@ const Explore = () => {
   useFocusEffect(
     useCallback(() => {
       queryClient.invalidateQueries(["trips"]);
-      return () => {};
+      return () => { };
     }, [])
   );
 
